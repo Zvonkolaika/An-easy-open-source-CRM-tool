@@ -1,0 +1,30 @@
+<div class="dialog-container">
+    @if(loading){<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
+    <h2 mat-dialog-title>Edit Address</h2>
+    <div mat-dialog-content class="dialog-content-cont pt-16">
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Street & House N</mat-label>
+                <input [disabled]="loading" [(ngModel)]="user.street" matInput placeholder="Street">
+                <!-- <mat-hint>Please enter a last name</mat-hint> -->
+              </mat-form-field>
+        </div>
+        <div>
+        <mat-form-field class="mr-16" appearance="outline">
+            <mat-label>Zip Code</mat-label>
+            <input [disabled]="loading" [(ngModel)]="user.zipCode" matInput placeholder="Zip Code">
+            <!-- <mat-hint>Please enter a last name</mat-hint> -->
+          </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>City</mat-label>
+                <input [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="City">
+                <!-- <mat-hint>Please enter a last name</mat-hint> -->
+            </mat-form-field>
+        </div>
+    </div>
+    <mat-dialog-actions>
+      <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
+      <button [disabled]="loading" mat-button (click)="saveUser()" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+    </div>
+    
