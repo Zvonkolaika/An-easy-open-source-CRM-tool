@@ -2,6 +2,10 @@
   height: 100vh;
 }
 
+.bgc-blue{
+    background-color: rgb(74, 135, 255);
+}
+
 .menu-icon{
     cursor: pointer;
 }
@@ -49,4 +53,5 @@ mat-toolbar, mat-toolbar-row {
 .router-container {
     padding-top: 16px;
     padding-left: 56px;
+    padding-right: 56px;
 }
