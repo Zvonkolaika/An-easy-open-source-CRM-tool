@@ -1,4 +1,22 @@
-<p>user works!</p>
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <table class="user-table">
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>City</th>
+            </tr>
+            @for(user of users; track user; let i = $index){
+                <tr>
+                <td><a [routerLink]="[ '/user/' + user.id ]">
+                    {{user.firstName}} {{user.lastName}}</a></td>
+                <td>{{user.email}}</td>
+                <td>{{user.city}}</td>
+                </tr>
+            }
+        </table>
+    </mat-card-content>
+  </mat-card>
 
 <button (click)="openDialog()"
     class="add-user-btn" 
