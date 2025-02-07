@@ -25,4 +25,26 @@
         {{user.street}}<br>
         {{user.zipCode}} {{user.city}}
     </mat-card-content>
+    <mat-card-header>
+        <mat-card-title>Type</mat-card-title>
+      </mat-card-header>
+    <mat-form-field appearance="outline" class="full-width">
+        <!-- <mat-label>Type</mat-label> -->
+        <mat-select [(ngModel)]="user.type" name="type" [ngClass]="getTypeClass(user.type)" class="ft-white">
+          @for (type of types; track type) {
+            <mat-option (click)="saveUser(user)" [value]="type.value" class="ft-white" [ngClass]="getTypeClass(type.value)">{{type.viewValue}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    <mat-card-header>
+        <mat-card-title>Priority</mat-card-title>
+      </mat-card-header>
+      <mat-form-field appearance="outline" class="full-width" >
+        <!-- <mat-label>Priority</mat-label> -->
+        <mat-select [(ngModel)]="user.priority" name="priority" [ngClass]="getPriorityClass(user.priority)" class="ft-white">
+          @for (priority of priorities; track priority) {
+            <mat-option (click)="saveUser(user)" [value]="priority.value" class="ft-white" [ngClass]="getPriorityClass(priority.value)">{{priority.viewValue}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
 </mat-card>

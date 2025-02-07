@@ -9,12 +9,26 @@ import { ActivatedRoute, ParamMap} from '@angular/router';
 import { User } from '../../models/user.class';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
+import {MatSelectModule} from '@angular/material/select';
+import { NgClass } from '@angular/common';
+import { UserService } from '../user.service';
+import { FormsModule } from '@angular/forms';
 
+interface Type {
+  value: string;
+  viewValue: string;
+}
+interface Priority {
+  value: string;
+  viewValue: string;
+}
 
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatIconModule, MatButtonModule, MatMenuModule, MatDialogModule],
+  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, 
+    MatSelectModule, NgClass, FormsModule,
+    MatIconModule, MatButtonModule, MatMenuModule, MatDialogModule],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
 })
@@ -26,8 +40,11 @@ export class UserDetailComponent implements OnInit {
   userId = '';
   user: User = new User();
   readonly dialog = inject(MatDialog);
+  
 
-  constructor(private route: ActivatedRoute ) { }
+  constructor(private route: ActivatedRoute,
+    private userService: UserService
+   ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -38,6 +55,19 @@ export class UserDetailComponent implements OnInit {
       } 
     );
   }
+
+  types: Type[] = [
+    {value: 'Customer', viewValue: 'Customer'},
+    {value: 'Partner', viewValue: 'Partner'},
+    {value: 'Lead', viewValue: 'Lead'},
+    {value: 'Vendor', viewValue: 'Vendor'},
+  ];
+
+  priorities: Priority[] = [
+    {value: 'High', viewValue: 'High'},
+    {value: 'Medium', viewValue: 'Medium'},
+    {value: 'Low', viewValue: 'Low'}
+  ];
 
   async getUser() {
     if (!this.userId) {
@@ -61,15 +91,63 @@ export class UserDetailComponent implements OnInit {
   }
 
 
-  editUserDetail() {
+  
+
+  editUserDetail(): void {
     const dialog = this.dialog.open(DialogEditUserComponent);
-    dialog.componentInstance.user = this.user;
+    dialog.componentInstance.user = new User(this.user.toJSON());
+
+    dialog.afterClosed().subscribe((updatedUser: User) => {
+      if (updatedUser) {
+        this.user = updatedUser;
+        // Update the component with the new user data
+      }
+    });
   }
 
   editMenu(): void {
     const dialog = this.dialog.open(DialogEditAddressComponent);
     dialog.componentInstance.user = new User(this.user.toJSON());
+    // dialog.componentInstance.userId = this.userId;
+
+    dialog.afterClosed().subscribe((updatedUser: User) => {
+      if (updatedUser) {
+        this.user = updatedUser;
+        // Update the component with the new user data
+      }
+    });
   }
+
+  // editMenu(): void {
+  //   const dialog = this.dialog.open(DialogEditAddressComponent);
+  //   dialog.componentInstance.user = new User(this.user.toJSON());
+  // }
+
+  // editUserDetail() {
+  //   const dialog = this.dialog.open(DialogEditUserComponent);
+  //   dialog.componentInstance.user = new User(this.user.toJSON());
+  // }
+
+  getTypeClass(type: string): string {
+    return this.userService.getTypeClass(type);
+  }
+
+  getPriorityClass(priority: string): string {
+    return this.userService.getPriorityClass(priority);
+  }
+
+  async saveUser(user: User) {
+
+    try {
+      const updatedUser = await this.userService.saveUser(user);
+    } catch (e) {
+      console.error('Error saving document: ', e);
+    } finally {
+    }
+  }
+
+
+}
 
   
 
@@ -85,4 +163,3 @@ export class UserDetailComponent implements OnInit {
   //   });
   // }
 
-}
