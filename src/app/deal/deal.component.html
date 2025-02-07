@@ -1,0 +1,32 @@
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <table class="user-table">
+            <tr>
+                <th>Deal</th>
+                <th>Stage</th>
+                <th>Value</th>
+                <th>Contact</th>
+                <th>Expected close date</th>
+            </tr>
+            @for(deal of deals; track deal; let i = $index){
+                <tr>
+                <td><a [routerLink]="[ '/deal/' + deal.id ]">
+                    {{deal.name}}</a></td>
+                <td class="ft-white" [ngClass]="getStageClass(deal.stage)">{{deal.stage}}</td>
+                <td>{{deal.value}}</td>
+                <td>{{deal.contact}}</td>
+                <td>{{deal.expectedCloseDate | date:'dd.MM.yy'}}</td>
+                </tr>
+            }
+        </table>
+    </mat-card-content>
+  </mat-card>
+
+<button (click)="openDialog()"
+    class="add-user-btn" 
+    mat-fab color="primary" 
+    matTooltip="Add deal" 
+    matTooltipPosition="above">
+    <mat-icon>add</mat-icon>
+</button>
+
