@@ -1,6 +1,7 @@
 mat-card-content{
     padding-left: 0;
     padding-right: 0;
+    overflow-x: overlay;
 }
 
 .add-user-btn{
@@ -19,13 +20,24 @@ mat-card-content{
         }
 
         border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
         &:last-child {
             border-bottom: none;
         }
         td{
+            border-right: 1px solid rgba(0, 0, 0, 0.4);
+            &:last-child {
+                border-bottom: none;
+                border-right: none;
+
+            }
+
             height: 48px;
             &:first-child{
                 padding-left: 16px;
+            }
+            &:last-child{
+                padding-right: 16px;
             }
             a{
                 color: black;
@@ -35,6 +47,9 @@ mat-card-content{
         th{
             &:first-child{
                 padding-left: 16px;
+            }
+            &:last-child{
+                padding-right: 16px;
             }
         }
 

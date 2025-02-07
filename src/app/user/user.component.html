@@ -5,6 +5,8 @@
                 <th>Name</th>
                 <th>Email</th>
                 <th>City</th>
+                <th>Type</th>
+                <th>Priority</th>
             </tr>
             @for(user of users; track user; let i = $index){
                 <tr>
@@ -12,6 +14,8 @@
                     {{user.firstName}} {{user.lastName}}</a></td>
                 <td>{{user.email}}</td>
                 <td>{{user.city}}</td>
+                <td class="ft-white" [ngClass]="getTypeClass(user.type)">{{user.type}}</td>
+                <td class="ft-white" [ngClass]="getPriorityClass(user.priority)">{{user.priority}}</td>
                 </tr>
             }
         </table>
