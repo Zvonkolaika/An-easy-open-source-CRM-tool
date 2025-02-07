@@ -1,0 +1,15 @@
+.dashboard-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: flex-start;
+    padding-bottom: 32px;
+}
+
+.numbers{
+    font-size: 32px;
+}
+
+canvas{
+   aspect-ratio:250 / 100;
+}

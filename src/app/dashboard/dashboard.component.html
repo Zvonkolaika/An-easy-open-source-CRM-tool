@@ -1,1 +1,44 @@
-<p>dashboard works!</p>
+<div class="dashboard-container">
+    <mat-card>
+        <mat-card-content appearance="outlined">
+            <h1>Deals</h1>
+        </mat-card-content>
+        <mat-card-content appearance="outlined">
+            <h1 class="numbers">{{ totalActiveDeals }}</h1>
+        </mat-card-content>
+    </mat-card>
+    <mat-card>
+        <mat-card-content appearance="outlined">
+            <h1>Deals - Revenue</h1>
+        </mat-card-content>
+        <mat-card-content appearance="outlined">
+            <h1 class="numbers">{{ totalRevenue | currency }}</h1>
+        </mat-card-content>
+    </mat-card>
+</div>
+<div class="dashboard-container">
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <h1>Deal status distribution</h1>
+        <div chartType="pie">
+            <div style="display: block;">
+                <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" type="pie">
+                </canvas>
+
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+<mat-card appearance="outlined">
+    <mat-card-content>
+        <h1>Revenue by month</h1>
+        <div chartType="bar">
+            <div style="display: block;">
+                <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="bar">
+                </canvas>
+
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>
+</div>
