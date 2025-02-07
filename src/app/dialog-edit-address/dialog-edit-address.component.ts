@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { Firestore, collection, addDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc } from '@angular/fire/firestore';
 import { User } from '../../models/user.class';
+import { UserService } from '../user.service';
 import { Input } from '@angular/core';
 import {
   MatDialogActions,
@@ -29,7 +30,14 @@ export class DialogEditAddressComponent {
 
   @Input() user!: User; // Expect a User instance to be passed
 
-  constructor(public dialogRef: MatDialogRef<DialogEditAddressComponent>) {}
+  private firestore: Firestore = inject(Firestore);
+
+  // userId: string;  
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogEditAddressComponent>,
+    private userService: UserService
+  ) {}
 
   loading = false;
   // user = User;
@@ -38,11 +46,17 @@ export class DialogEditAddressComponent {
     this.dialogRef.close(null); // Return null when the dialog is closed without saving
   }
 
-  async saveUser() {
-    this.loading = true;
-  
-    console.log('User data to save:', this.user);
-    this.dialogRef.close(this.user); // Pass the user data to UserComponent
-  }
+    async saveUser(user: User) {
 
+    this.loading = true;
+    try {
+      const updatedUser = await this.userService.saveUser(user);
+      this.dialogRef.close(updatedUser);
+    } catch (e) {
+      console.error('Error saving document: ', e);
+    } finally {
+      this.loading = false;
+    }
+  }
 }
+

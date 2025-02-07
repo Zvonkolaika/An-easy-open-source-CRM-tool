@@ -1,12 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle, 
 } from '@angular/material/dialog';
-import { Input } from '@angular/core';
 import { User } from '../../models/user.class';
+import { UserService } from '../user.service';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -28,22 +29,40 @@ export class DialogEditUserComponent {
 
   @Input() user!: User; // Expect a User instance to be passed
 
-  constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>) {
-    this.birthDate = new Date(); // Initialize with the current date or any other default value
+  private firestore: Firestore = inject(Firestore);
+
+  constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>,
+    private userService: UserService
+  ) {
+    // this.birthDate = new Date(); // Initialize with the current date or any other default value
   }
 
   loading = false;
-  birthDate: Date;
+  birthDate: Date | null = null;
+
+  ngOnInit() {
+    if (this.user && this.user.birthDate) {
+      this.birthDate = new Date(this.user.birthDate);
+    }
+  }
 
   closeDialog() {
     this.dialogRef.close(null); // Return null when the dialog is closed without saving
   }
 
-  async saveUser() {
+  async saveUser(user: User) {
     this.loading = true;
-  
-    console.log('User data to save:', this.user);
-    this.dialogRef.close(this.user); // Pass the user data to UserComponent
+    try {
+      if (this.birthDate) {
+        this.user.birthDate = this.birthDate.getTime();
+      }
+      const updatedUser = await this.userService.saveUser(this.user);
+      this.dialogRef.close(updatedUser);
+    } catch (e) {
+      console.error('Error saving document: ', e);
+    } finally {
+      this.loading = false;
+    }
   }
 
 }
