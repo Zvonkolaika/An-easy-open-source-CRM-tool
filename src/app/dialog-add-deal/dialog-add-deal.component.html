@@ -1,0 +1,54 @@
+<div class="dialog-container">
+    @if(loading){<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
+    <h2 mat-dialog-title>Add Deal</h2>
+    <div mat-dialog-content class="dialog-content-cont">
+      <div>
+        <mat-form-field class="mr-16" appearance="outline" class="full-width">
+          <mat-label>Deal</mat-label>
+          <input [disabled]="loading" [(ngModel)]="deal.name" matInput placeholder="Deal">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Stage</mat-label>
+          <mat-select [(ngModel)]="deal.stage" name="stage" [ngClass]="getStageClass(deal.stage)" class="ft-white">
+            @for (stage of stages; track stage) {
+              <mat-option [value]="stage.value" class="ft-white" [ngClass]="getStageClass(stage.value)">{{stage.viewValue}}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Value</mat-label>
+          <input [disabled]="loading" [(ngModel)]="deal.value" matInput placeholder="Value">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contact</mat-label>
+            <mat-select [(ngModel)]="deal.contact" name="contact">
+                @for (user of users; track user) {
+                    <mat-option [value]="user.id">
+                    {{user.firstName}} {{user.lastName}}
+              </mat-option>
+            }
+            </mat-select>
+          </mat-form-field>
+      </div>
+      <div>
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Expected close date</mat-label>
+          <input [disabled]="loading" [(ngModel)]="expectedCloseDate" matInput placeholder="Expected close date" [matDatepicker]="picker">
+          <!-- <mat-hint>Please enter a date</mat-hint> -->
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      
+    </div>
+    <mat-dialog-actions>
+      <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
+      <button [disabled]="loading" mat-button (click)="saveDeal()" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+  </div>
