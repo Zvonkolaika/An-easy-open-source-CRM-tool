@@ -58,5 +58,9 @@ export class DialogEditAddressComponent {
       this.loading = false;
     }
   }
+
+  isFormValid(): boolean {
+    return !!this.user.city;
+  }
 }
 

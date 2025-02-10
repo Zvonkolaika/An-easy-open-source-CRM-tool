@@ -89,6 +89,10 @@ export class DialogAddUserComponent {
     }
   }
 
+  isFormValid(): boolean {
+    return !!this.user.firstName && !!this.user.lastName && !!this.user.email && !!this.birthDate && !!this.user.city && !!this.user.type && !!this.user.priority;
+  }
+
   getTypeClass(type: string): string {
     return this.userService.getTypeClass(type);
   }

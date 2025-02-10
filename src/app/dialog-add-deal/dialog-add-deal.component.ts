@@ -86,6 +86,10 @@ export class DialogAddDealComponent {
     }
   }
 
+  isFormValid(): boolean {
+    return !!this.deal.name && !!this.deal.stage && !!this.deal.value && !!this.deal.contact && !!this.expectedCloseDate;
+  }
+
   getStageClass(type: string): string {
     return this.dealService.getStageClass(type);
   }

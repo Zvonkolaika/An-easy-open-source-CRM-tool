@@ -5,26 +5,26 @@
     <div>
       <mat-form-field class="mr-16" appearance="outline">
         <mat-label>First Name</mat-label>
-        <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First">
-        <!-- <mat-hint>Please enter a name</mat-hint> -->
+        <input [disabled]="loading" [(ngModel)]="user.firstName" matInput placeholder="First" required>
+        @if(!user.firstName){<mat-error>First Name is required</mat-error>}
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>Last Name</mat-label>
-        <input [disabled]="loading" [(ngModel)]="user.lastName" matInput placeholder="Last Name">
-        <!-- <mat-hint>Please enter a last name</mat-hint> -->
+        <input [disabled]="loading" [(ngModel)]="user.lastName" matInput placeholder="Last Name" required>
+        @if(!user.lastName){<mat-error>Last Name is required</mat-error>}
       </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>E-mail</mat-label>
-        <input [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="E-mail">
+        <input [disabled]="loading" [(ngModel)]="user.email" matInput placeholder="E-mail" required>
+        @if(!user.email){<mat-error>E-mail is required</mat-error>}
       </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Birth Date</mat-label>
         <input [disabled]="loading" [(ngModel)]="birthDate" matInput placeholder="Birth Date" [matDatepicker]="picker">
-        <!-- <mat-hint>Please enter a date</mat-hint> -->
         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
@@ -33,44 +33,44 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Street & House N</mat-label>
         <input [disabled]="loading" [(ngModel)]="user.street" matInput placeholder="Street">
-        <!-- <mat-hint>Please enter a last name</mat-hint> -->
       </mat-form-field>
     </div>
     <div>
       <mat-form-field class="mr-16" appearance="outline">
         <mat-label>Zip Code</mat-label>
         <input [disabled]="loading" [(ngModel)]="user.zipCode" matInput placeholder="Zip Code">
-        <!-- <mat-hint>Please enter a last name</mat-hint> -->
       </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>City</mat-label>
-        <input [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="City">
-        <!-- <mat-hint>Please enter a last name</mat-hint> -->
+        <input [disabled]="loading" [(ngModel)]="user.city" matInput placeholder="City" required>
+        @if(!user.city){<mat-error>City is required</mat-error>}
       </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Type</mat-label>
-        <mat-select [(ngModel)]="user.type" name="type" [ngClass]="getTypeClass(user.type)" class="ft-white">
+        <mat-select [(ngModel)]="user.type" name="type" [ngClass]="getTypeClass(user.type)" class="ft-white" required>
           @for (type of types; track type) {
             <mat-option [value]="type.value" class="ft-white" [ngClass]="getTypeClass(type.value)">{{type.viewValue}}</mat-option>
           }
         </mat-select>
+        @if(!user.type){<mat-error>Type is required</mat-error>}
       </mat-form-field>
     </div>
     <div>
       <mat-form-field appearance="outline" class="full-width" >
         <mat-label>Priority</mat-label>
-        <mat-select [(ngModel)]="user.priority" name="priority" [ngClass]="getPriorityClass(user.priority)" class="ft-white">
+        <mat-select [(ngModel)]="user.priority" name="priority" [ngClass]="getPriorityClass(user.priority)" class="ft-white" required>
           @for (priority of priorities; track priority) {
             <mat-option [value]="priority.value" class="ft-white" [ngClass]="getPriorityClass(priority.value)">{{priority.viewValue}}</mat-option>
           }
         </mat-select>
+        @if(!user.priority){<mat-error>Priority is required</mat-error>}
       </mat-form-field>
     </div>
   </div>
   <mat-dialog-actions>
     <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
-    <button [disabled]="loading" mat-button (click)="saveUser()" cdkFocusInitial>Save</button>
+    <button [disabled]="loading || !isFormValid()" mat-button (click)="saveUser()" cdkFocusInitial>Save</button>
   </mat-dialog-actions>
 </div>

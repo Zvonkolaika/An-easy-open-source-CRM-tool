@@ -65,4 +65,8 @@ export class DialogEditUserComponent {
     }
   }
 
+  isFormValid(): boolean {
+    return !!this.user.firstName && !!this.user.lastName && !!this.user.email;
+  }
+
 }
