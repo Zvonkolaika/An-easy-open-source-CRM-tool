@@ -39,7 +39,7 @@ export class DashboardComponent {
                 const dataset = data.datasets[0];
                 const value = dataset.data[i] as number;
                 const total = dataset.data.reduce((acc: number, val) => acc + (typeof val === 'number' ? val : 0), 0);
-                const percentage = ((value / total) * 100).toFixed(1) + '%';
+                const percentage = ((value / total) * 100).toFixed(0) + '%';
                 return {
                   text: `${label}: ${percentage}`,
                   fillStyle: Array.isArray(dataset.backgroundColor) ? dataset.backgroundColor[i] : undefined,
@@ -77,14 +77,14 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
       callbacks: {
         label: (context) => {
           const value = context.raw as number;
-          return `$${value.toFixed(2)}`; // Format the value as currency
+          return `$${value.toFixed(0)}`; // Format the value as currency
         }
       }
     },
     datalabels: {
       anchor: 'end',
       align: 'end',
-      formatter: (value) => `$${value.toFixed(1)}`, // Format the value as currency
+      formatter: (value) => `$${value.toFixed(0)}`, // Format the value as currency
       color: '#000', // Set the color of the labels
     } 
 
@@ -121,7 +121,7 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
   
     const totalDeals = deals.length;
     this.totalActiveDeals = totalDeals;
-    this.totalRevenue = deals.reduce((acc, deal) => acc + (typeof deal.value === 'number' ? deal.value : parseFloat(deal.value) || 0), 0);
+    this.totalRevenue = Math.round(deals.reduce((acc, deal) => acc + (typeof deal.value === 'number' ? deal.value : parseFloat(deal.value) || 0), 0));
     console.log('Total Revenue:', this.totalRevenue); // Debug log
   
     const labels = Object.keys(statusCounts).filter(label => label); // Filter out any undefined labels
@@ -133,11 +133,11 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     // Define a mapping of deal stages to colors
     const stageColors: { [key: string]: string } = {
       'New': 'rgb(110, 114, 228)',
-      'Negotiation': 'rgb(87, 155, 252)',
-      'Won': 'rgb(125, 212, 255)',
-      'Lost': 'rgb(104, 212, 206)',
-      'In Progress': 'rgb(25, 225, 142)',
-      'Closed': 'rgb(223, 47, 74)'
+      'Discovery': 'rgb(87, 155, 252)',
+      'Proposal': 'rgb(125, 212, 255)',
+      'Negotiation': 'rgb(104, 212, 206)',
+      'Won': 'rgb(25, 225, 142)',
+      'Lost': 'rgb(223, 47, 74)'
     };
   
     // Map the colors to the labels
@@ -166,7 +166,7 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
     this.barChartData = {
       labels: months,
       datasets: [
-        { data: revenueData, label: 'Revenue', backgroundColor: 'rgb(112, 180, 255)' } // Set the bar color
+        { data: revenueData, label: 'Revenue', backgroundColor: 'rgb(9, 240, 193)' } // Set the bar color
       ]
     };
   
