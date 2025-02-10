@@ -8,6 +8,8 @@ export class User {
     street: string;
     zipCode: number;
     city: string;
+    type: string;
+    priority: string;
 
     constructor(obj?: any) {
         this.id = obj ? obj.id : null;
@@ -19,6 +21,8 @@ export class User {
         this.street = obj ? obj.street : '';
         this.zipCode = obj ? obj.zipCode : '';
         this.city = obj ? obj.city : '';
+        this.type = obj ? obj.type : '';
+        this.priority = obj ? obj.priority : '';
         // if(obj) {
         // this.firstName = obj.firstName;
         // }
@@ -36,7 +40,9 @@ export class User {
             birthDate: this.birthDate,
             street: this.street,
             zipCode: this.zipCode,
-            city: this.city
+            city: this.city,
+            type: this.type,
+            priority: this.priority
         };
     
 }
