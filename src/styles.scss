@@ -18,3 +18,67 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .mt-32{
     margin-top: 32px;
 }
+
+.ft-white{
+    color: white !important;
+}
+
+.customer-option {
+    background:rgb(87, 155, 252)!important;
+  }
+  
+.partner-option {
+    background: rgb(3, 127, 76)!important;
+  }
+  
+.lead-option {
+    background: rgb(102, 204, 255)!important;
+    
+  }
+
+.vendor-option {
+    // background: rgb(34, 80, 145)  !important;
+    // background: rgb(255, 136, 136) !important;
+    background:rgb(253, 171, 61) !important;
+ 
+  }
+
+.high-option {
+    background: rgb(248, 106, 57) !important;
+  }
+  
+.medium-option {
+    // background: rgb(87, 155, 252) !important;
+    background: rgb(255, 136, 136) !important;
+  }
+  
+.low-option {
+    background: rgb(78, 204, 198) !important;
+  }
+
+.new-option {
+    background: rgb(110, 114, 228) !important;
+}
+
+  .discovery-option {
+    background:rgb(87, 155, 252) !important;
+  } 
+
+  .proposal-option {
+    background: rgb(125, 212, 255)!important;
+  } 
+
+  .negotiation-option {
+    background: rgb(104, 212, 206)!important;
+  }
+
+  .won-option {
+    background: rgb(0, 200, 117) !important;
+  } 
+
+  .lost-option {
+    background: rgb(223, 47, 74) !important;
+  } 
+
+
+
