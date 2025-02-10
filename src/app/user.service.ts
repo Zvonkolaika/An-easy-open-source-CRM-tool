@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, getDocs, getDoc } from '@angular/fire/firestore';
 import { User } from '../models/user.class';
 
 @Injectable({
@@ -34,5 +34,50 @@ export class UserService {
     }
 
     return user;
+  }
+
+  async getUsers(): Promise<User[]> {
+    const usersCollection = collection(this.firestore, 'users');
+    const userSnapshot = await getDocs(usersCollection);
+    return userSnapshot.docs.map(doc => new User(doc.data()));
+  }
+
+  async getUserById(userId: string): Promise<User | null> {
+    const userDocRef = doc(this.firestore, `users/${userId}`);
+    const userDoc = await getDoc(userDocRef);
+    if (userDoc.exists()) {
+      return new User(userDoc.data());
+    } else {
+      return null;
+    }
+  }
+  
+
+  getTypeClass(type: string): string {
+    switch (type) {
+      case 'Customer':
+        return 'customer-option';
+      case 'Partner':
+        return 'partner-option';
+      case 'Lead':
+        return 'lead-option';
+        case 'Vendor':
+          return 'vendor-option';
+      default:
+        return '';
+    }
+  }
+
+  getPriorityClass(priority: string): string {
+    switch (priority) {
+      case 'High':
+        return 'high-option';
+      case 'Medium':
+        return 'medium-option';
+      case 'Low':
+        return 'low-option';
+      default:
+        return '';
+    }
   }
 }
