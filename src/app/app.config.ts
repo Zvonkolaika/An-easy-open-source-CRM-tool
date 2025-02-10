@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { provideCharts, withDefaultRegisterables } from 'ng2-charts';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDk5-eYvlwqyOm1CM-z50a0dX0Kr1XBT9w",
@@ -16,9 +17,14 @@ const firebaseConfig = {
 };
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimationsAsync(), provideFirebaseApp(() => initializeApp(firebaseConfig)), provideFirestore(() => getFirestore())]
-};
-
+  providers: [provideRouter(routes), provideAnimationsAsync(), 
+    provideFirebaseApp(() => initializeApp(firebaseConfig)), 
+    provideFirestore(() => getFirestore()),
+    provideCharts(withDefaultRegisterables())
+  
+  ],
+    
+}; 
 
 
 
