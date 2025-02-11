@@ -1,0 +1,37 @@
+.deal-detail-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-end;
+    min-height: 250px;
+    background-color: rgb(255, 136, 136);
+    color: white;
+    padding-left: 16px;
+    padding-bottom: 16px;
+  
+    .deal-detail-image {
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+      object-fit: cover;
+    }
+  
+    .deal-detail-info {
+      margin-left: 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      height: 100px;
+  
+      h2 {
+        margin-bottom: 0;
+      }
+    }
+  }
+  
+  .pin-right-upper-corner {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }

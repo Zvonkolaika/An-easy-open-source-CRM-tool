@@ -1,0 +1,48 @@
+<mat-card class="deal-detail-header">
+    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="dealMenu">
+      <mat-icon>more_vert</mat-icon>
+      <mat-menu #dealMenu="matMenu">
+        <button mat-menu-item (click)="editDealDetail()">Edit</button>
+      </mat-menu>
+    </button>
+    <img class="deal-detail-image" src="../../assets/img/deal-img.png" />
+    <div class="deal-detail-info">
+      <h1>{{deal.name}}</h1>
+      <h3>{{contactName}}</h3>
+    </div>
+  </mat-card>
+  
+  <mat-card class="mt-32">
+    <button mat-icon-button class="pin-right-upper-corner" [matMenuTriggerFor]="addressMenu">
+      <mat-icon>more_vert</mat-icon>
+      <mat-menu #addressMenu="matMenu">
+        <!-- <button mat-menu-item (click)="editMenu()">Edit</button> -->
+      </mat-menu>
+    </button>
+  
+    <mat-card-header>
+      <mat-card-subtitle>Value:</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+    {{deal.value  | currency }}
+    </mat-card-content>
+  
+    <mat-card-header>
+      <mat-card-subtitle>Expected Close Date</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      {{deal.expectedCloseDate | date: 'dd.MM.yyyy'}}
+    </mat-card-content>
+  
+    <mat-card-header>
+      <mat-card-subtitle>Type</mat-card-subtitle>
+    </mat-card-header>
+  <mat-form-field appearance="outline" class="full-width">
+      <!-- <mat-label>Type</mat-label> -->
+      <mat-select [(ngModel)]="deal.stage" name="stage" [ngClass]="getStageClass(deal.stage)" class="ft-white">
+        @for (stage of stages; track stage) {
+          <mat-option (click)="saveDeal(deal)" [value]="stage.value" class="ft-white" [ngClass]="getStageClass(stage.value)">{{stage.viewValue}}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </mat-card>
