@@ -14,12 +14,18 @@ import { DealService } from '../deal.service';
 import { NgClass } from '@angular/common';
 import { DatePipe } from '@angular/common';
 import { UserService } from '../user.service';
+import { NgModule } from '@angular/core';
+
+import { BrowserModule } from '@angular/platform-browser';
+
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-deal',
   standalone: true,
   imports: [MatIconModule, MatButtonModule, MatTooltipModule, 
-    MatDialogModule, MatCardModule, RouterLink, NgClass, DatePipe],
+    MatDialogModule, MatCardModule, RouterLink, NgClass, DatePipe, CommonModule],
   templateUrl: './deal.component.html',
   styleUrl: './deal.component.scss'
 })
@@ -28,7 +34,7 @@ export class DealComponent {
    private firestore: Firestore = inject(Firestore);
 
     deals$: Observable<Deal[]>;
-     deals: Deal[] = []; // Array to store loaded users
+     deals: Deal[] = [];
 
   constructor(private dealService: DealService, private userService: UserService) {
       this.deals$ = collectionData(collection(this.firestore, 'deals'), { idField: 'id' }) as Observable<Deal[]>;

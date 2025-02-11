@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc, getDocs } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, getDocs, getDoc } from '@angular/fire/firestore';
 import { Deal } from '../models/deal.class';
 
 @Injectable({
@@ -39,6 +39,16 @@ async getDeals(): Promise<Deal[]> {
     const dealsCollection = collection(this.firestore, 'deals');
     const dealSnapshot = await getDocs(dealsCollection);
     return dealSnapshot.docs.map(doc => new Deal(doc.data()));
+  }
+
+  async getDealById(dealId: string): Promise<Deal> {
+    const dealDocRef = doc(this.firestore, `deals/${dealId}`);
+    const dealDoc = await getDoc(dealDocRef);
+    if (dealDoc.exists()) {
+      return new Deal(dealDoc.data());
+    } else {
+      throw new Error('No such document!');
+    }
   }
 
 getStageClass(stage: string): string {

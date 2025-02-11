@@ -13,7 +13,7 @@
                 <td><a [routerLink]="[ '/deal/' + deal.id ]">
                     {{deal.name}}</a></td>
                 <td class="ft-white" [ngClass]="getStageClass(deal.stage)">{{deal.stage}}</td>
-                <td>{{deal.value}}</td>
+                <td>{{deal.value  | currency }} </td>
                 <td>{{deal.contact}}</td>
                 <td>{{deal.expectedCloseDate | date:'dd.MM.yy'}}</td>
                 </tr>

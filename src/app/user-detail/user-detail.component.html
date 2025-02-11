@@ -19,14 +19,14 @@
           </mat-menu>
     </button>
     <mat-card-header>
-        <mat-card-title>Address</mat-card-title>
+        <mat-card-subtitle>Address</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         {{user.street}}<br>
         {{user.zipCode}} {{user.city}}
     </mat-card-content>
     <mat-card-header>
-        <mat-card-title>Type</mat-card-title>
+        <mat-card-subtitle>Type</mat-card-subtitle>
       </mat-card-header>
     <mat-form-field appearance="outline" class="full-width">
         <!-- <mat-label>Type</mat-label> -->
@@ -37,10 +37,9 @@
         </mat-select>
       </mat-form-field>
     <mat-card-header>
-        <mat-card-title>Priority</mat-card-title>
+        <mat-card-subtitle>Priority</mat-card-subtitle>
       </mat-card-header>
       <mat-form-field appearance="outline" class="full-width" >
-        <!-- <mat-label>Priority</mat-label> -->
         <mat-select [(ngModel)]="user.priority" name="priority" [ngClass]="getPriorityClass(user.priority)" class="ft-white">
           @for (priority of priorities; track priority) {
             <mat-option (click)="saveUser(user)" [value]="priority.value" class="ft-white" [ngClass]="getPriorityClass(priority.value)">{{priority.viewValue}}</mat-option>

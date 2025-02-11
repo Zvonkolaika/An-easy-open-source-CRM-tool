@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {MatDialog, MatDialogModule} from '@angular/material/dialog';
 import { Firestore, getDoc, doc } from '@angular/fire/firestore';
-import { MatCard, MatCardHeader, MatCardTitle, MatCardContent} from '@angular/material/card';
+import { MatCard, MatCardHeader, MatCardContent} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
@@ -13,6 +13,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgClass } from '@angular/common';
 import { UserService } from '../user.service';
 import { FormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
 
 interface Type {
   value: string;
@@ -26,8 +27,8 @@ interface Priority {
 @Component({
   selector: 'app-user-detail',
   standalone: true,
-  imports: [MatCard, MatCardHeader, MatCardTitle, MatCardContent, 
-    MatSelectModule, NgClass, FormsModule,
+  imports: [MatCard, MatCardHeader, MatCardContent, 
+    MatSelectModule, NgClass, FormsModule, MatCardModule,
     MatIconModule, MatButtonModule, MatMenuModule, MatDialogModule],
   templateUrl: './user-detail.component.html',
   styleUrl: './user-detail.component.scss'
@@ -82,6 +83,8 @@ export class UserDetailComponent implements OnInit {
         // Explicitly create a User instance
         this.user = new User(userDoc.data());
         console.log('User data:', this.user);
+
+        
       } else {
         console.error('No such document!');
       }
