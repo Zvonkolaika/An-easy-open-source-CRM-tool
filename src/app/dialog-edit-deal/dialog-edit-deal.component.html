@@ -1,0 +1,32 @@
+<div class="dialog-container">
+    @if(loading){<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
+    <h2 mat-dialog-title>Edit Deal</h2>
+    <div mat-dialog-content class="dialog-content-cont pt-16">
+        <div>
+            <mat-form-field class="mr-16" appearance="outline">
+              <mat-label>Deal</mat-label>
+              <input [disabled]="loading" [(ngModel)]="deal.name" matInput placeholder="First" required>
+              @if(!deal.name){<mat-error>Deal is required</mat-error>}
+            </mat-form-field>
+        </div>
+        <div>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Contact</mat-label>
+            <mat-select [(ngModel)]="deal.contact" name="contact" required>
+                @for (user of users; track user) {
+                    <mat-option [value]="user.id">
+                    {{user.firstName}} {{user.lastName}}
+              </mat-option>
+            }
+            </mat-select>
+            @if(!deal.contact){<mat-error>Contact is required</mat-error>}
+          </mat-form-field>
+          </div>
+          <mat-dialog-actions>
+            <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
+            <button [disabled]="loading || !isFormValid()" mat-button (click)="saveDeal(deal)" cdkFocusInitial>Save</button>
+          </mat-dialog-actions>
+    </div>
+</div>
+
+
