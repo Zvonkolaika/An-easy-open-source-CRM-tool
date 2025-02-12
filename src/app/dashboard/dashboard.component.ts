@@ -9,6 +9,7 @@ import { ChartConfiguration, ChartEvent, ChartType,  } from 'chart.js';
 import { CommonModule } from '@angular/common';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from 'chart.js';
+import { max } from 'rxjs';
 
 Chart.register(ChartDataLabels);
 @Component({
@@ -92,8 +93,12 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
   scales: {
     x: {},
     y: {
-      beginAtZero: true
+      beginAtZero: true,
+      afterDataLimits: (scale) => {
+        scale.max = scale.max + 10000; // Always set max +10,000
+      }
     }
+    
   }
 };
 
