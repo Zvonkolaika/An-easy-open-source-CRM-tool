@@ -1,1 +1,29 @@
-<p>dialog-edit-deal-details works!</p>
+<div class="dialog-container">
+    @if(loading){<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
+    <h2 mat-dialog-title>Edit Deal Details</h2>
+    <div mat-dialog-content class="dialog-content-cont pt-16">
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Value</mat-label>
+              <input [disabled]="loading" [(ngModel)]="deal.value" matInput placeholder="Value" required>
+              @if(!deal.value){<mat-error>Value is required</mat-error>}
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Expected close date</mat-label>
+              <input [disabled]="loading" [(ngModel)]="expectedCloseDate" matInput placeholder="Expected close date" [matDatepicker]="picker" required>
+              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              @if(!deal.expectedCloseDate){<mat-error>Expected close date is required</mat-error>}
+            </mat-form-field>
+          </div>
+    </div>
+    
+    <mat-dialog-actions>
+      <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
+      <button [disabled]="loading || !isFormValid()" mat-button (click)="saveDeal(deal)" cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+    </div>
+    
+

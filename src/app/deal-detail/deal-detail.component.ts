@@ -14,6 +14,7 @@ import { DealService } from '../deal.service';
 import { UserService } from '../user.service';
 import { FormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import { DialogEditDealDetailsComponent } from '../dialog-edit-deal-details/dialog-edit-deal-details.component';
 
 interface Stage {
   value: string;
@@ -110,4 +111,16 @@ export class DealDetailComponent implements OnInit {
       console.error('Error saving document: ', e);
     }
   }
+
+  editMenu(): void {
+      const dialog = this.dialog.open(DialogEditDealDetailsComponent);
+      dialog.componentInstance.deal = new Deal(this.deal.toJSON());
+  
+      dialog.afterClosed().subscribe((updatedDeal: Deal) => {
+        if (updatedDeal) {
+          this.deal = updatedDeal;
+          // Update the component with the new user data
+        }
+      });
+    }
 }
