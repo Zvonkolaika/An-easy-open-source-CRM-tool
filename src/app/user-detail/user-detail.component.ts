@@ -5,7 +5,7 @@ import { MatCard, MatCardHeader, MatCardContent} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatMenuModule} from '@angular/material/menu';
-import { ActivatedRoute, ParamMap} from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { User } from '../../models/user.class';
 import { DialogEditAddressComponent } from '../dialog-edit-address/dialog-edit-address.component';
 import { DialogEditUserComponent } from '../dialog-edit-user/dialog-edit-user.component';
@@ -14,6 +14,8 @@ import { NgClass } from '@angular/common';
 import { UserService } from '../user.service';
 import { FormsModule } from '@angular/forms';
 import {MatCardModule} from '@angular/material/card';
+import { DealService } from '../deal.service';
+import { UserDeleteDialogComponent } from '../user-delete-dialog/user-delete-dialog.component';
 
 interface Type {
   value: string;
@@ -44,8 +46,10 @@ export class UserDetailComponent implements OnInit {
   
 
   constructor(private route: ActivatedRoute,
-    private userService: UserService
-   ) { }
+      private router: Router,
+      private dealService: DealService,
+      private userService: UserService,
+     ) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
@@ -121,16 +125,6 @@ export class UserDetailComponent implements OnInit {
     });
   }
 
-  // editMenu(): void {
-  //   const dialog = this.dialog.open(DialogEditAddressComponent);
-  //   dialog.componentInstance.user = new User(this.user.toJSON());
-  // }
-
-  // editUserDetail() {
-  //   const dialog = this.dialog.open(DialogEditUserComponent);
-  //   dialog.componentInstance.user = new User(this.user.toJSON());
-  // }
-
   getTypeClass(type: string): string {
     return this.userService.getTypeClass(type);
   }
@@ -149,20 +143,59 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
+  async deleteUser(user: User) {
+    try {
+      if (user.id) {
+        const deals = await this.dealService.getDealsByUserId(user.id);
+        if (deals.length > 0) {
+          this.dialog.open(UserDeleteDialogComponent, {
+            data: { message: 'The user cannot be deleted because they have associated deals.' }
+          });
+          return;
+        }
+        await this.userService.deleteUser(user.id);
+        this.router.navigate(['/user']); // Navigate back to the users list after deletion
+      } else {
+        console.error('User ID is undefined');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
+  }
+
+  // async deleteUser(user: User) {
+  //   try {
+  //     if (user.id) {
+  //       const deals = await this.dealService.getDealsByUserId(user.id);
+  //       if (deals.length > 0) {
+  //         console.error('User cannot be deleted because they have associated deals.');
+  //         alert('User cannot be deleted because they have associated deals.');
+  //         return;
+  //       }
+  //       await this.userService.deleteUser(user.id);
+  //       this.router.navigate(['/users']); // Navigate back to the users list after deletion
+  //     } else {
+  //       console.error('User ID is undefined');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error deleting user:', error);
+  //   }
+  // }
+
+
+  // async deleteUser(user: User) {
+  //   try {
+  //     if (user.id) {
+  //       await this.userService.deleteUser(user.id);
+  //     } else {
+  //       console.error('User ID is undefined');
+  //     }
+  //     this.router.navigate(['/user']); // Navigate back to the users list after deletion
+  //   } catch (error) {
+  //     console.error('Error deleting user:', error);
+  //   }
+  // }
+
 
 }
-
-  
-
-  // openDialog(){
-  //   const dialogRef = this.dialog.open(DialogAddUserComponent);
-   
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     console.log('Dialog result:', result); // Debug log
-
-  //     if (result) {
-  //       // this.saveUsers(result);
-  //     }
-  //   });
-  // }
 
