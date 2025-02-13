@@ -2,31 +2,51 @@
     <mat-card-content>
         <table class="user-table">
             <tr>
-                <th>Deal</th>
+                <th class="th-deal">
+                    @if(!showFilter){
+                    <ng-container>Deal
+                        <button mat-fab color="accent" matTooltip="Filter deals" matTooltipPosition="above"
+                            class="filter-button no-hover" (click)="toggleFilter()">
+                            <mat-icon>filter_alt</mat-icon>
+                        </button>
+                    </ng-container>
+                    }
+                    @if(showFilter){
+                    <ng-container>
+                        <mat-form-field appearance="fill" class="short-input">
+                            <mat-label class="filter-input">Filter deals
+                                @if(showCloseButton){
+                                <button mat-fab color="accent" matTooltip="Close filter" matTooltipPosition="above"
+                                    class="close-button no-hover" (click)="resetFilter()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                                }
+                            </mat-label>
+                            <input class="filter-input" matInput (input)="applyFilter($event)"
+                                (focus)="showCloseButton = false" (blur)="resetFilter()" placeholder="Type a letter">
+                        </mat-form-field>
+                    </ng-container>
+                    }
+                </th>
                 <th>Stage</th>
                 <th>Value</th>
                 <th>Contact</th>
                 <th>Expected close date</th>
             </tr>
-            @for(deal of deals; track deal; let i = $index){
-                <tr>
+            @for(deal of filteredDeals; track trackByFn; let i = $index){
+            <tr>
                 <td><a [routerLink]="[ '/deal/' + deal.id ]">
-                    {{deal.name}}</a></td>
+                        {{deal.name}}</a></td>
                 <td class="ft-white" [ngClass]="getStageClass(deal.stage)">{{deal.stage}}</td>
-                <td>{{deal.value  | currency }} </td>
+                <td>{{deal.value | currency }} </td>
                 <td>{{deal.contact}}</td>
                 <td>{{deal.expectedCloseDate | date:'dd.MM.yy'}}</td>
-                </tr>
+            </tr>
             }
         </table>
     </mat-card-content>
-  </mat-card>
-
-<button (click)="openDialog()"
-    class="add-user-btn" 
-    mat-fab color="primary" 
-    matTooltip="Add deal" 
+</mat-card>
+<button (click)="openDialog()" class="add-user-btn" mat-fab color="primary" matTooltip="Add deal"
     matTooltipPosition="above">
     <mat-icon>add</mat-icon>
 </button>
-
