@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc, getDocs, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, query, where,
+  getDocs, getDoc, deleteDoc } from '@angular/fire/firestore';
 import { Deal } from '../models/deal.class';
 
 @Injectable({
@@ -7,6 +8,13 @@ import { Deal } from '../models/deal.class';
 })
 export class DealService {
   constructor(private firestore: Firestore) {}
+
+  async getDealsByUserId(userId: string): Promise<Deal[]> {
+    const dealsCollection = collection(this.firestore, 'deals');
+    const q = query(dealsCollection, where('contact', '==', userId));
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => new Deal(doc.data()));
+  }
 
   async saveDeal(deal: Deal): Promise<Deal> {
     const dealsCollection = collection(this.firestore, 'deals');
@@ -69,4 +77,10 @@ getStageClass(stage: string): string {
         return '';
     }
   }
+
+    async deleteDeal(dealId: string): Promise<void> {
+      const dealDocRef = doc(this.firestore, `deals/${dealId}`);
+      await deleteDoc(dealDocRef);
+      console.log('Deal deleted with ID:', dealId);
+    }
   }
