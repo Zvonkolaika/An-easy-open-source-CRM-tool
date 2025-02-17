@@ -1,20 +1,22 @@
-mat-card-content{
+mat-card-content {
     padding-left: 0;
     padding-right: 0;
     overflow-x: overlay;
 }
 
-.add-user-btn{
+.add-user-btn {
     position: absolute;
     right: 56px;
     bottom: 56px;
 }
 
-.user-table{
+.user-table {
     width: 100%;
     border-collapse: collapse;
+
     tr {
         cursor: pointer;
+
         &:first-child {
             cursor: unset;
         }
@@ -24,8 +26,10 @@ mat-card-content{
         &:last-child {
             border-bottom: none;
         }
-        td{
+
+        td {
             border-right: 1px solid rgba(0, 0, 0, 0.4);
+
             &:last-child {
                 border-bottom: none;
                 border-right: none;
@@ -33,34 +37,41 @@ mat-card-content{
             }
 
             height: 48px;
-            &:first-child{
+
+            &:first-child {
                 padding-left: 16px;
             }
-            &:last-child{
+
+            &:last-child {
                 padding-right: 16px;
             }
-            a{
+
+            a {
                 color: black;
                 text-decoration: none;
             }
         }
-        th{
-            &:first-child{
+
+        th {
+            &:first-child {
                 padding-left: 16px;
             }
-            &:last-child{
+
+            &:last-child {
                 padding-right: 16px;
             }
         }
 
-        &:hover{
+        &:hover {
             background-color: rgba(0, 0, 0, 0.04);
-            &:first-child{
+
+            &:first-child {
                 background-color: unset;
             }
         }
     }
-    th{
+
+    th {
         color: rgba(0, 0, 0, 0.4);
         font-size: 14px;
         font-weight: 500;

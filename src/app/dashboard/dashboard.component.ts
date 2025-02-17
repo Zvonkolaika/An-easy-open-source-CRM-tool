@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
-import {ChangeDetectionStrategy} from '@angular/core';
-import {MatCardModule} from '@angular/material/card';
+import { ChangeDetectionStrategy } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
 import { DealService } from '../deal.service';
 import { ChartData, ChartOptions } from 'chart.js';
-import { BaseChartDirective, provideCharts } from 'ng2-charts';
+import { BaseChartDirective } from 'ng2-charts';
 import { ChangeDetectorRef } from '@angular/core';
-import { ChartConfiguration, ChartEvent, ChartType,  } from 'chart.js';
+import { ChartConfiguration, ChartType, } from 'chart.js';
 import { CommonModule } from '@angular/common';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from 'chart.js';
-import { max } from 'rxjs';
 
 Chart.register(ChartDataLabels);
 @Component({
@@ -56,63 +55,57 @@ export class DashboardComponent {
     }
   };
 
-public pieChartType: ChartType = 'pie';
-public totalActiveDeals: number = 0; // Add this property
-public totalRevenue: number = 0; // Add this property
+  public pieChartType: ChartType = 'pie';
+  public totalActiveDeals: number = 0; 
+  public totalRevenue: number = 0; 
 
-// Add properties for the bar chart
-public barChartData: ChartData<'bar'> = {
-  labels: [],
-  datasets: [
-    { data: [], label: 'Revenue', backgroundColor: 'rgb(87, 155, 252)' } // Set the bar color
-  ]
-};
+  public barChartData: ChartData<'bar'> = {
+    labels: [],
+    datasets: [
+      { data: [], label: 'Revenue', backgroundColor: 'rgb(87, 155, 252)' } // Set the bar color
+    ]
+  };
 
-public barChartOptions: ChartConfiguration<'bar'>['options'] = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false // Hide the legend
+  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const value = context.raw as number;
+            return `$${value.toFixed(0)}`; 
+          }
+        }
+      },
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        formatter: (value) => `$${value.toFixed(0)}`, 
+        color: '#000', 
+      }
     },
-    tooltip: {
-      callbacks: {
-        label: (context) => {
-          const value = context.raw as number;
-          return `$${value.toFixed(0)}`; // Format the value as currency
+    scales: {
+      x: {},
+      y: {
+        beginAtZero: true,
+        afterDataLimits: (scale) => {
+          scale.max = scale.max + 10000; // Always set max +10,000
         }
       }
-    },
-    datalabels: {
-      anchor: 'end',
-      align: 'end',
-      formatter: (value) => `$${value.toFixed(0)}`, // Format the value as currency
-      color: '#000', // Set the color of the labels
-    } 
-
-  },
-  scales: {
-    x: {},
-    y: {
-      beginAtZero: true,
-      afterDataLimits: (scale) => {
-        scale.max = scale.max + 10000; // Always set max +10,000
-      }
     }
-    
-  }
-};
+  };
 
-  constructor(private dealService: DealService, private cdr: ChangeDetectorRef) {}
+  constructor(private dealService: DealService, private cdr: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.loadDealStatusDistribution();
-   
   }
 
   async loadDealStatusDistribution() {
     const deals = await this.dealService.getDeals();
-    console.log('Loaded deals:', deals); // Debug log
-  
     const statusCounts = deals.reduce((acc: { [key: string]: number }, deal) => {
       if (!deal.stage) {
         console.warn('Deal with undefined stage:', deal); // Warn about deals with undefined stage
@@ -121,20 +114,13 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
       acc[deal.stage] = (acc[deal.stage] || 0) + 1;
       return acc;
     }, {});
-  
-    console.log('Status Counts:', statusCounts); // Debug log
-  
+
     const totalDeals = deals.length;
     this.totalActiveDeals = totalDeals;
     this.totalRevenue = Math.round(deals.reduce((acc, deal) => acc + (typeof deal.value === 'number' ? deal.value : parseFloat(deal.value) || 0), 0));
-    console.log('Total Revenue:', this.totalRevenue); // Debug log
-  
     const labels = Object.keys(statusCounts).filter(label => label); // Filter out any undefined labels
     const data = Object.values(statusCounts).map(count => (count as number / totalDeals) * 100);
-  
-    console.log('Labels:', labels); // Debug log
-    console.log('Data:', data); // Debug log
-  
+
     // Define a mapping of deal stages to colors
     const stageColors: { [key: string]: string } = {
       'New': 'rgb(110, 114, 228)',
@@ -144,10 +130,10 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
       'Won': 'rgb(25, 225, 142)',
       'Lost': 'rgb(223, 47, 74)'
     };
-  
+
     // Map the colors to the labels
     const backgroundColor = labels.map(label => stageColors[label] || '#000000'); // Default to black if no color is found
-  
+
     this.pieChartData = {
       labels,
       datasets: [{
@@ -155,28 +141,24 @@ public barChartOptions: ChartConfiguration<'bar'>['options'] = {
         backgroundColor
       }]
     };
-  
-    console.log('Pie Chart Data:', this.pieChartData); // Debug log
-  
+
     // Calculate monthly revenue
     const monthlyRevenue = deals.reduce((acc: { [key: string]: number }, deal) => {
       const monthYear = deal.expectedCloseDate ? new Date(deal.expectedCloseDate).toLocaleString('default', { month: 'short', year: 'numeric' }) : 'Unknown';
       acc[monthYear] = (acc[monthYear] || 0) + (typeof deal.value === 'number' ? deal.value : parseFloat(deal.value) || 0);
       return acc;
     }, {});
-  
+
     const months = Object.keys(monthlyRevenue);
     const revenueData = Object.values(monthlyRevenue);
-  
+
     this.barChartData = {
       labels: months,
       datasets: [
         { data: revenueData, label: 'Revenue', backgroundColor: 'rgb(9, 240, 193)' } // Set the bar color
       ]
     };
-  
-    console.log('Bar Chart Data:', this.barChartData); // Debug log
-  
+
     this.cdr.markForCheck(); // Manually trigger change detection
   }
 }

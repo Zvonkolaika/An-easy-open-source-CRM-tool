@@ -1,28 +1,26 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc } from '@angular/fire/firestore';
-import { User } from '../../models/user.class';
+import { Component, inject } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { UserService } from '../user.service';
 import { Input } from '@angular/core';
 import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle, 
-} from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+  MatDialogTitle } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
 import { Deal } from '../../models/deal.class';
 import { DealService } from '../deal.service';
-import {provideNativeDateAdapter} from '@angular/material/core';
+import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-dialog-edit-deal-details',
   standalone: true,
-  imports: [MatDialogContent, MatDialogActions, MatDialogTitle, 
+  imports: [MatDialogContent, MatDialogActions, MatDialogTitle,
     MatButtonModule, MatInputModule, MatFormFieldModule,
     MatDatepickerModule, MatProgressBarModule, FormsModule],
   templateUrl: './dialog-edit-deal-details.component.html',
@@ -31,14 +29,13 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 })
 export class DialogEditDealDetailsComponent {
 
-  @Input() deal!: Deal; // Expect a User instance to be passed
+  @Input() deal!: Deal;
 
   private firestore: Firestore = inject(Firestore);
- 
-   constructor(public dialogRef: MatDialogRef<DialogEditDealDetailsComponent>,
-     private userService: UserService, private dealService: DealService
-   ) {
-   }
+
+  constructor(public dialogRef: MatDialogRef<DialogEditDealDetailsComponent>,
+    private userService: UserService, private dealService: DealService
+  ) {}
 
   loading = false;
   expectedCloseDate: Date | null = null;
@@ -50,12 +47,11 @@ export class DialogEditDealDetailsComponent {
   }
 
   closeDialog() {
-    this.dialogRef.close(null); // Return null when the dialog is closed without saving
+    this.dialogRef.close(null);
   }
 
   async saveDeal(deal: Deal) {
     this.loading = true;
-    
     try {
       if (this.expectedCloseDate) {
         this.deal.expectedCloseDate = this.expectedCloseDate.getTime();

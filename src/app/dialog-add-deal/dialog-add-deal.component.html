@@ -1,58 +1,60 @@
 <div class="dialog-container">
-    @if(loading){<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
-    <h2 mat-dialog-title>Add Deal</h2>
-    <div mat-dialog-content class="dialog-content-cont">
-      <div>
-        <mat-form-field class="mr-16" appearance="outline" class="full-width">
-          <mat-label>Deal</mat-label>
-          <input [disabled]="loading" [(ngModel)]="deal.name" matInput placeholder="Deal" required>
-          @if(!deal.name){<mat-error>Deal name is required</mat-error>}
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Stage</mat-label>
-          <mat-select [(ngModel)]="deal.stage" name="stage" [ngClass]="getStageClass(deal.stage)" class="ft-white" required>
-            @for (stage of stages; track stage) {
-              <mat-option [value]="stage.value" class="ft-white" [ngClass]="getStageClass(stage.value)">{{stage.viewValue}}</mat-option>
-            }
-          </mat-select>
-          @if(!deal.stage){<mat-error>Stage is required</mat-error>}
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Value</mat-label>
-          <input [disabled]="loading" [(ngModel)]="deal.value" matInput placeholder="Value" required>
-          @if(!deal.value){<mat-error>Value is required</mat-error>}
-        </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-            <mat-label>Contact</mat-label>
-            <mat-select [(ngModel)]="deal.contact" name="contact" required>
-                @for (user of users; track user) {
-                    <mat-option [value]="user.id">
-                    {{user.firstName}} {{user.lastName}}
-              </mat-option>
-            }
-            </mat-select>
-            @if(!deal.contact){<mat-error>Contact is required</mat-error>}
-          </mat-form-field>
-      </div>
-      <div>
-        <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Expected close date</mat-label>
-          <input [disabled]="loading" [(ngModel)]="expectedCloseDate" matInput placeholder="Expected close date" [matDatepicker]="picker" required>
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-          @if(!deal.expectedCloseDate){<mat-error>Expected close date is required</mat-error>}
-        </mat-form-field>
-      </div>
-      
+  @if(loading){<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
+  <h2 mat-dialog-title>Add Deal</h2>
+  <div mat-dialog-content class="dialog-content-cont">
+    <div>
+      <mat-form-field class="mr-16" appearance="outline" class="full-width">
+        <mat-label>Deal</mat-label>
+        <input [disabled]="loading" [(ngModel)]="deal.name" matInput placeholder="Deal" required>
+        @if(!deal.name){<mat-error>Deal name is required</mat-error>}
+      </mat-form-field>
     </div>
-    <mat-dialog-actions>
-      <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
-      <button [disabled]="loading || !isFormValid()" mat-button (click)="saveDeal()" cdkFocusInitial>Save</button>
-    </mat-dialog-actions>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Stage</mat-label>
+        <mat-select [(ngModel)]="deal.stage" name="stage" [ngClass]="getStageClass(deal.stage)" class="ft-white"
+          required>
+          @for (stage of stages; track stage) {
+          <mat-option [value]="stage.value" class="ft-white"
+            [ngClass]="getStageClass(stage.value)">{{stage.viewValue}}</mat-option>
+          }
+        </mat-select>
+        @if(!deal.stage){<mat-error>Stage is required</mat-error>}
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Value</mat-label>
+        <input [disabled]="loading" [(ngModel)]="deal.value" matInput placeholder="Value" required>
+        @if(!deal.value){<mat-error>Value is required</mat-error>}
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contact</mat-label>
+        <mat-select [(ngModel)]="deal.contact" name="contact" required>
+          @for (user of users; track user) {
+          <mat-option [value]="user.id">
+            {{user.firstName}} {{user.lastName}}
+          </mat-option>
+          }
+        </mat-select>
+        @if(!deal.contact){<mat-error>Contact is required</mat-error>}
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Expected close date</mat-label>
+        <input [disabled]="loading" [(ngModel)]="expectedCloseDate" matInput placeholder="Expected close date"
+          [matDatepicker]="picker" required>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        @if(!deal.expectedCloseDate){<mat-error>Expected close date is required</mat-error>}
+      </mat-form-field>
+    </div>
   </div>
+  <mat-dialog-actions>
+    <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
+    <button [disabled]="loading || !isFormValid()" mat-button (click)="saveDeal()" cdkFocusInitial>Save</button>
+  </mat-dialog-actions>
+</div>

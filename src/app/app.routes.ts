@@ -12,5 +12,4 @@ export const routes: Routes = [
     { path: 'user/:id', component: UserDetailComponent},
     { path: 'deal', component: DealComponent},
     { path: 'deal/:id', component: DealDetailComponent},
-    
 ];

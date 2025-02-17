@@ -1,8 +1,7 @@
 export class User {
-    id?: string; // Optional because it will be added after the document is created
+    id?: string; 
     firstName: string;
     lastName: string;
-    // birthDate: number;
     email: string;
     birthDate: number | null;
     street: string;
@@ -16,19 +15,12 @@ export class User {
         this.firstName = obj ? obj.firstName : '';
         this.lastName = obj ? obj.lastName : '';
         this.email = obj ? obj.email : '';
-        // this.birthDate = obj ? obj.birthDate : '';
         this.birthDate = obj ? obj.birthDate : null;
         this.street = obj ? obj.street : '';
         this.zipCode = obj ? obj.zipCode : '';
         this.city = obj ? obj.city : '';
         this.type = obj ? obj.type : '';
         this.priority = obj ? obj.priority : '';
-        // if(obj) {
-        // this.firstName = obj.firstName;
-        // }
-        // else{
-        // this.firstName = '';
-        // }
     }
 
     toJSON() {
@@ -44,6 +36,5 @@ export class User {
             type: this.type,
             priority: this.priority
         };
-    
 }
 }

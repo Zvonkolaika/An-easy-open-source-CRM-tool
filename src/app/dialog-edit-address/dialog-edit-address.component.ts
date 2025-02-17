@@ -1,8 +1,7 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc } from '@angular/fire/firestore';
+import { Component, inject, Input } from '@angular/core';
+import { Firestore } from '@angular/fire/firestore';
 import { User } from '../../models/user.class';
 import { UserService } from '../user.service';
-import { Input } from '@angular/core';
 import {
   MatDialogActions,
   MatDialogContent,
@@ -16,7 +15,6 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
 
-
 @Component({
   selector: 'app-dialog-edit-address',
   standalone: true,
@@ -28,11 +26,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class DialogEditAddressComponent {
 
-  @Input() user!: User; // Expect a User instance to be passed
+  @Input() user!: User; 
 
   private firestore: Firestore = inject(Firestore);
-
-  // userId: string;  
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditAddressComponent>,
@@ -40,14 +36,12 @@ export class DialogEditAddressComponent {
   ) {}
 
   loading = false;
-  // user = User;
 
   closeDialog() {
-    this.dialogRef.close(null); // Return null when the dialog is closed without saving
+    this.dialogRef.close(null); 
   }
 
     async saveUser(user: User) {
-
     this.loading = true;
     try {
       const updatedUser = await this.userService.saveUser(user);

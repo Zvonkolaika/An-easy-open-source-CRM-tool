@@ -22,8 +22,8 @@ import { MatMenuModule } from '@angular/material/menu';
 @Component({
   selector: 'app-deal',
   standalone: true,
-  imports: [MatIconModule, MatButtonModule, MatTooltipModule, 
-    MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule, 
+  imports: [MatIconModule, MatButtonModule, MatTooltipModule,
+    MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule,
     MatCardModule, RouterLink, NgClass, DatePipe, CommonModule],
   templateUrl: './deal.component.html',
   styleUrl: './deal.component.scss'
@@ -39,21 +39,21 @@ export class DealComponent {
   showCloseButton: boolean = true;
 
   constructor(private dealService: DealService, private userService: UserService) {
-    this.deals$ = collectionData(collection(this.firestore, 'deals'), 
-    { idField: 'id' }) as Observable<Deal[]>;
+    this.deals$ = collectionData(collection(this.firestore, 'deals'),
+      { idField: 'id' }) as Observable<Deal[]>;
   }
 
   ngOnInit(): void {
     this.deals$.subscribe(deals => {
       this.deals = deals;
-      this.filteredDeals = deals; 
+      this.filteredDeals = deals;
       this.loadDeals();
     });
   }
 
   async loadDeals() {
     this.deals = await this.dealService.getDeals();
-    this.filteredDeals = this.deals; 
+    this.filteredDeals = this.deals;
     for (let deal of this.deals) {
       if (deal.contact) {
         const user = await this.userService.getUserById(deal.contact);
@@ -87,7 +87,7 @@ export class DealComponent {
   }
 
   toggleFilter() {
-    this.showFilter = !this.showFilter; 
+    this.showFilter = !this.showFilter;
     this.showCloseButton = true;
   }
 

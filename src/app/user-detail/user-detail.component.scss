@@ -1,41 +1,42 @@
-.user-detail-header{
+.user-detail-header {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-end;
     min-height: 250px;
-    // background-color: rgb(9, 240, 193);
-    // background-color: rgb(252, 122, 53);
     background-color: rgb(255, 138, 71);
     color: white;
     padding-left: 16px;
     padding-bottom: 16px;
-    .user-detail-image{
+
+    .user-detail-image {
         width: 100px;
         height: 100px;
         border-radius: 100%;
         object-fit: cover;
-        }
-    .user-detail-info{
+    }
+
+    .user-detail-info {
         margin-left: 32px;
         display: flex;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;
         height: 100px;
-        h2{
+
+        h2 {
             margin-bottom: 0;
         }
     }
 }
 
-.pin-right-upper-corner{
+.pin-right-upper-corner {
     position: absolute;
     top: 0;
     right: 0;
 }
 
-.pin-right-down-corner{
+.pin-right-down-corner {
     position: absolute;
     bottom: 0;
     right: 0;

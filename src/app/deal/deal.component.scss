@@ -13,42 +13,54 @@ mat-card-content {
 .user-table {
     width: 100%;
     border-collapse: collapse;
+
     tr {
         cursor: pointer;
 
         &:first-child {
             cursor: unset;
         }
+
         border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
         &:last-child {
             border-bottom: none;
         }
+
         td {
             border-right: 1px solid rgba(0, 0, 0, 0.4);
+
             &:last-child {
                 border-bottom: none;
                 border-right: none;
             }
+
             height: 48px;
+
             &:first-child {
                 padding-left: 16px;
             }
+
             &:last-child {
                 padding-right: 16px;
             }
+
             a {
                 color: black;
                 text-decoration: none;
             }
         }
+
         th {
             &:first-child {
                 padding-left: 16px;
             }
+
             &:last-child {
                 padding-right: 16px;
             }
         }
+
         &:hover {
             background-color: rgba(0, 0, 0, 0.04);
 
@@ -57,6 +69,7 @@ mat-card-content {
             }
         }
     }
+
     th {
         color: rgba(0, 0, 0, 0.4);
         font-size: 14px;
@@ -77,6 +90,7 @@ mat-card-content {
     background-color: transparent !important;
     box-shadow: none !important;
     color: grey;
+
     &:hover {
         background-color: transparent !important;
         box-shadow: none !important;
@@ -86,9 +100,11 @@ mat-card-content {
 .short-input {
     width: 120px;
     height: 80px;
+
     .filter-input {
         font-size: 14px;
     }
+
     .filter-input::placeholder {
         font-size: 14px;
     }

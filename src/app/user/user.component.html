@@ -9,23 +9,20 @@
                 <th>Priority</th>
             </tr>
             @for(user of users; track user; let i = $index){
-                <tr>
+            <tr>
                 <td><a [routerLink]="[ '/user/' + user.id ]">
-                    {{user.firstName}} {{user.lastName}}</a></td>
+                        {{user.firstName}} {{user.lastName}}</a></td>
                 <td>{{user.email}}</td>
                 <td>{{user.city}}</td>
                 <td class="ft-white" [ngClass]="getTypeClass(user.type)">{{user.type}}</td>
                 <td class="ft-white" [ngClass]="getPriorityClass(user.priority)">{{user.priority}}</td>
-                </tr>
+            </tr>
             }
         </table>
     </mat-card-content>
-  </mat-card>
+</mat-card>
 
-<button (click)="openDialog()"
-    class="add-user-btn" 
-    mat-fab color="primary" 
-    matTooltip="Add user" 
+<button (click)="openDialog()" class="add-user-btn" mat-fab color="primary" matTooltip="Add user"
     matTooltipPosition="above">
     <mat-icon>add</mat-icon>
 </button>

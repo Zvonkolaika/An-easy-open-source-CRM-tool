@@ -9,13 +9,12 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatCardModule} from '@angular/material/card';
 import { FormsModule } from '@angular/forms';
 
-
-
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatToolbarModule, MatSidenavModule, MatIconModule, MatCardModule,
-  MatProgressBarModule, MatButtonModule, MatTooltipModule, FormsModule, ],
+  imports: [RouterOutlet, MatToolbarModule, MatSidenavModule, 
+            MatIconModule, MatCardModule, MatProgressBarModule, 
+            MatButtonModule, MatTooltipModule, FormsModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

@@ -1,5 +1,5 @@
 export class Deal {
-    id?: string; // Optional because it will be added after the document is created
+    id?: string; 
     name: string;
     stage: string;
     value: number;
@@ -24,5 +24,5 @@ export class Deal {
             contact: this.contact,
             expectedCloseDate: this.expectedCloseDate
         };
-}
+    }
 }

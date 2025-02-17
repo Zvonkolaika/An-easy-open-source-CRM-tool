@@ -1,11 +1,10 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { Firestore } from '@angular/fire/firestore';
-import {
+import { 
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle, 
-} from '@angular/material/dialog';
+  MatDialogTitle } from '@angular/material/dialog';
 import { User } from '../../models/user.class';
 import { UserService } from '../user.service';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,8 +21,10 @@ import { DealService } from '../deal.service';
 @Component({
   selector: 'app-dialog-edit-deal',
   standalone: true,
-  imports: [MatProgressBarModule, MatFormFieldModule, FormsModule, MatDialogActions, MatButtonModule, 
-    MatInputModule, MatDatepickerModule, MatDialogContent, MatDialogTitle, MatMenuModule, MatSelectModule],
+  imports: [MatProgressBarModule, MatFormFieldModule, FormsModule, 
+            MatDialogActions, MatButtonModule, MatInputModule, 
+            MatDatepickerModule, MatDialogContent, MatDialogTitle, 
+            MatMenuModule, MatSelectModule],
   templateUrl: './dialog-edit-deal.component.html',
   styleUrl: './dialog-edit-deal.component.scss'
 })
@@ -33,43 +34,34 @@ export class DialogEditDealComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DialogEditDealComponent>,
     private userService: UserService, private dealService: DealService
-  ) {
-  }
+  ) {}
 
   loading = false;
-  @Input() deal!: Deal; // Expect a Deal instance to be passed
+  @Input() deal!: Deal; 
   users: User[] = [];
 
   ngOnInit() {
-    console.log('Initial deal:', this.deal); 
-    console.log('Initial deal.contact:', this.deal.contact); // Check the value before loading users
+    console.log('Initial deal:', this.deal);
+    console.log('Initial deal.contact:', this.deal.contact);
     this.loadUsers();
   }
-  
 
   async loadUsers() {
     this.users = await this.userService.getUsers();
-    console.log('Users loaded:', this.users);
-  
-    // Convert contact name to user ID
     if (this.deal.contact) {
-      const foundUser = this.users.find(user => 
+      const foundUser = this.users.find(user =>
         `${user.firstName} ${user.lastName}` === this.deal.contact
       );
       if (foundUser) {
-        this.deal.contact = foundUser.id!; // Assign the correct ID
+        this.deal.contact = foundUser.id!;
       } else {
         console.warn('User not found for contact:', this.deal.contact);
       }
     }
-  
-    console.log('Updated deal.contact:', this.deal.contact);
   }
-  
-  
 
   closeDialog() {
-    this.dialogRef.close(null); // Return null when the dialog is closed without saving
+    this.dialogRef.close(null);
   }
 
   async saveDeal(deal: Deal) {

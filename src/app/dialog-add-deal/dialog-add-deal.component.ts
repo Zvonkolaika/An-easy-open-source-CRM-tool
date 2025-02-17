@@ -1,26 +1,24 @@
 import { DealService } from '../deal.service';
 import { Deal } from '../../models/deal.class';
-import { Component, inject } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { Component} from '@angular/core';
 import { User } from '../../models/user.class';
 import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle, 
+  MatDialogTitle,
 } from '@angular/material/dialog';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../user.service';
-import {MatMenuModule} from '@angular/material/menu';
-import {MatSelectModule} from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatSelectModule } from '@angular/material/select';
 import { NgClass } from '@angular/common';
-
 
 interface Stage {
   value: string;
@@ -30,9 +28,10 @@ interface Stage {
 @Component({
   selector: 'app-dialog-add-deal',
   standalone: true,
-  imports: [MatDialogContent, MatDialogActions, MatDialogTitle, 
+  imports: [MatDialogContent, MatDialogActions, MatDialogTitle,
     MatButtonModule, MatInputModule, MatFormFieldModule,
-    MatDatepickerModule, MatProgressBarModule, FormsModule, MatMenuModule, MatSelectModule, NgClass],
+    MatDatepickerModule, MatProgressBarModule, FormsModule, 
+    MatMenuModule, MatSelectModule, NgClass],
   templateUrl: './dialog-add-deal.component.html',
   providers: [provideNativeDateAdapter()],
   styleUrls: ['./dialog-add-deal.component.scss']
@@ -57,7 +56,7 @@ export class DialogAddDealComponent {
     public dialogRef: MatDialogRef<DialogAddDealComponent>,
     private dealService: DealService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadUsers();
@@ -93,5 +92,4 @@ export class DialogAddDealComponent {
   getStageClass(type: string): string {
     return this.dealService.getStageClass(type);
   }
-
 }

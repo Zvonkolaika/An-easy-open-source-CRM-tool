@@ -17,28 +17,26 @@
     </mat-card>
 </div>
 <div class="dashboard-container">
-<mat-card appearance="outlined">
-    <mat-card-content>
-        <h1>Deal status distribution</h1>
-        <div chartType="pie">
-            <div style="display: block;">
-                <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" type="pie">
-                </canvas>
-
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <h1>Deal status distribution</h1>
+            <div chartType="pie">
+                <div style="display: block;">
+                    <canvas baseChart [data]="pieChartData" [options]="pieChartOptions" type="pie">
+                    </canvas>
+                </div>
             </div>
-        </div>
-    </mat-card-content>
-</mat-card>
-<mat-card appearance="outlined">
-    <mat-card-content>
-        <h1>Revenue by month</h1>
-        <div chartType="bar">
-            <div style="display: block;">
-                <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="bar">
-                </canvas>
-
+        </mat-card-content>
+    </mat-card>
+    <mat-card appearance="outlined">
+        <mat-card-content>
+            <h1>Revenue by month</h1>
+            <div chartType="bar">
+                <div style="display: block;">
+                    <canvas baseChart [data]="barChartData" [options]="barChartOptions" type="bar">
+                    </canvas>
+                </div>
             </div>
-        </div>
-    </mat-card-content>
-</mat-card>
+        </mat-card-content>
+    </mat-card>
 </div>

@@ -4,38 +4,35 @@ import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
-  MatDialogTitle, 
-} from '@angular/material/dialog';
+  MatDialogTitle } from '@angular/material/dialog';
 import { User } from '../../models/user.class';
 import { UserService } from '../user.service';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {provideNativeDateAdapter} from '@angular/material/core';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-dialog-edit-user',
   standalone: true,
-  imports: [MatProgressBarModule, MatFormFieldModule, FormsModule, MatDialogActions, MatButtonModule, 
-    MatInputModule, MatDatepickerModule, MatDialogContent, MatDialogTitle],
+  imports: [MatProgressBarModule, MatFormFieldModule, FormsModule, 
+            MatDialogActions, MatButtonModule, MatInputModule, 
+            MatDatepickerModule, MatDialogContent, MatDialogTitle],
   templateUrl: './dialog-edit-user.component.html',
   providers: [provideNativeDateAdapter()],
   styleUrl: './dialog-edit-user.component.scss'
 })
 export class DialogEditUserComponent {
 
-  @Input() user!: User; // Expect a User instance to be passed
-
+  @Input() user!: User;
   private firestore: Firestore = inject(Firestore);
 
   constructor(public dialogRef: MatDialogRef<DialogEditUserComponent>,
     private userService: UserService
-  ) {
-    // this.birthDate = new Date(); // Initialize with the current date or any other default value
-  }
+  ) {}
 
   loading = false;
   birthDate: Date | null = null;
@@ -47,7 +44,7 @@ export class DialogEditUserComponent {
   }
 
   closeDialog() {
-    this.dialogRef.close(null); // Return null when the dialog is closed without saving
+    this.dialogRef.close(null); 
   }
 
   async saveUser(user: User) {
@@ -68,5 +65,4 @@ export class DialogEditUserComponent {
   isFormValid(): boolean {
     return !!this.user.firstName && !!this.user.lastName && !!this.user.email;
   }
-
 }
