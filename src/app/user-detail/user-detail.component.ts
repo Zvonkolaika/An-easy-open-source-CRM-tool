@@ -14,7 +14,7 @@ import { NgClass } from '@angular/common';
 import { UserService } from '../user.service';
 import { FormsModule } from '@angular/forms';
 import { DealService } from '../deal.service';
-import { UserDeleteDialogComponent } from '../user-delete-dialog/user-delete-dialog.component';
+import { WarningDialogComponent } from '../warning-dialog/warning-dialog.component';
 
 interface Type {
   value: string;
@@ -130,7 +130,7 @@ export class UserDetailComponent implements OnInit {
       if (user.id) {
         const deals = await this.dealService.getDealsByUserId(user.id);
         if (deals.length > 0) {
-          this.dialog.open(UserDeleteDialogComponent, {
+          this.dialog.open(WarningDialogComponent, {
             data: { message: 'The user cannot be deleted because they have associated deals.' }
           });
           return;
