@@ -1,11 +1,12 @@
-import { Component, inject } from '@angular/core';
-import { Firestore } from '@angular/fire/firestore';
+import { Component, Inject, inject } from '@angular/core';
+import { Firestore, collection, query, where, getDocs } from '@angular/fire/firestore';
 import { User } from '../../models/user.class';
 import {
   MatDialogActions,
   MatDialogContent,
   MatDialogRef,
   MatDialogTitle,
+  MAT_DIALOG_DATA
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +19,7 @@ import { UserService } from '../user.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { NgClass } from '@angular/common';
+import { Contact } from '../../models/contact.class';
 
 interface Type {
   value: string;
@@ -40,8 +42,20 @@ interface Priority {
 })
 export class DialogAddUserComponent {
   constructor(public dialogRef: MatDialogRef<DialogAddUserComponent>,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    @Inject(MAT_DIALOG_DATA) public data: { contact: Contact }
+  ) {
+    if (data && data.contact) {
+    this.user.firstName = data.contact.firstName;
+    this.user.lastName = data.contact.lastName;
+    this.user.email = data.contact.email;
+    this.user.city = data.contact.city;
+    this.user.street = data.contact.street;
+    this.user.zipCode = data.contact.zipCode;
+  }
+ }
+
+ errorMessage: string = '';
 
   private firestore: Firestore = inject(Firestore);
 
@@ -70,11 +84,32 @@ export class DialogAddUserComponent {
 
   async saveUser() {
     this.loading = true;
+    this.errorMessage = '';
     try {
+
+      console.log('Saving user:', this.user);
       if (this.birthDate) {
         this.user.birthDate = this.birthDate.getTime();
       }
+
+      // Check if a user with the same name already exists
+      const usersCollection = collection(this.firestore, 'users');
+      const q = query(usersCollection, where('firstName', '==', this.user.firstName), where('lastName', '==', this.user.lastName));
+      const querySnapshot = await getDocs(q);
+
+      console.log('Query snapshot:', querySnapshot);
+
+      if (!querySnapshot.empty) {
+        this.errorMessage = 'A user with the same name already exists.';
+        console.log(this.errorMessage);
+        this.loading = false;
+        return;
+      }
+
+
+      
       const updatedUser = await this.userService.saveUser(this.user);
+      console.log('User saved:', updatedUser);
       this.dialogRef.close(updatedUser);
     } catch (e) {
       console.error('Error saving document: ', e);
