@@ -51,6 +51,21 @@ export class DashboardComponent {
             return [];
           }
         }
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => {
+            const label = context.label || '';
+            const value = context.raw as number;
+            const total = context.dataset.data.reduce((acc: number, val) => acc + (typeof val === 'number' ? val : 0), 0);
+            const percentage = ((value / total) * 100).toFixed(0) + '%';
+            return `${label}: ${percentage}`;
+          }
+        }
+      },
+      datalabels: {
+        formatter: (value) => value.toFixed(0) + '%', // Round to 2 decimal places
+        color: '#000',
       }
     }
   };
@@ -136,6 +151,7 @@ export class DashboardComponent {
 
     this.pieChartData = {
       labels,
+      
       datasets: [{
         data,
         backgroundColor
