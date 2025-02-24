@@ -1,0 +1,133 @@
+mat-card-content {
+    padding-left: 0;
+    padding-right: 0;
+    overflow-x: overlay;
+}
+
+.add-contact-btn {
+    position: absolute;
+    right: 56px;
+    bottom: 56px;
+}
+
+.contact-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    .empty{
+        padding-right: 16px;
+        border-right: none !important;
+    }
+
+    tr {
+        cursor: pointer;
+
+        &:first-child {
+            cursor: unset;
+        }
+
+        border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+
+        &:last-child {
+            border-bottom: none;
+        }
+
+        td {
+            border-right: 1px solid rgba(0, 0, 0, 0.4);
+
+            &:last-child {
+                border-bottom: none;
+                border-right: none;
+            }
+
+            height: 48px;
+
+            &:first-child {
+                padding-left: 16px;
+            }
+
+            &:last-child {
+                padding-right: 16px;
+            }
+
+            a {
+                color: black;
+                text-decoration: none;
+            }
+        }
+
+        th {
+            &:first-child {
+                padding-left: 16px;
+            }
+
+            &:last-child {
+                padding-right: 16px;
+            }
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.04);
+
+            &:first-child {
+                background-color: unset;
+            }
+        }
+    }
+
+    th {
+        color: rgba(0, 0, 0, 0.4);
+        font-size: 14px;
+        font-weight: 500;
+        text-align: start;
+    }
+}
+
+.th-deal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.filter-button,
+.close-button {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    color: grey;
+
+    &:hover {
+        background-color: transparent !important;
+        box-shadow: none !important;
+    }
+}
+
+.short-input {
+    width: 120px;
+    height: 80px;
+
+    .filter-input {
+        font-size: 14px;
+    }
+
+    .filter-input::placeholder {
+        font-size: 14px;
+    }
+}
+
+.close-button {
+    right: 16px;
+    bottom: 8px;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.no-hover:hover {
+    background-color: inherit !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+}
