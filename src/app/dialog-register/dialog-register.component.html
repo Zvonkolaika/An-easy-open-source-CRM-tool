@@ -1,0 +1,89 @@
+<div class="dialog-container">
+  @if(loading){<mat-progress-bar mode="indeterminate"></mat-progress-bar>}
+  <h2 mat-dialog-title>Registration</h2>
+  <div mat-dialog-content class="dialog-content-cont">
+    <div>
+      <mat-form-field class="mr-16" appearance="outline">
+        <mat-label>Your Name</mat-label>
+        <input [disabled]="loading" [(ngModel)]="contact.firstName" matInput placeholder="First" required>
+        @if(!contact.firstName){<mat-error>First Name is required</mat-error>}
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Your Last Name</mat-label>
+        <input [disabled]="loading" [(ngModel)]="contact.lastName" matInput placeholder="Last Name" required>
+        @if(!contact.lastName){<mat-error>Last Name is required</mat-error>}
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Your E-mail</mat-label>
+        <input [disabled]="loading" [(ngModel)]="contact.email" matInput placeholder="E-mail" required>
+        @if(!contact.email){<mat-error>E-mail is required</mat-error>}
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Street & House N</mat-label>
+        <input [disabled]="loading" [(ngModel)]="contact.street" matInput placeholder="Street">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field class="mr-16" appearance="outline">
+        <mat-label>Zip Code</mat-label>
+        <input [disabled]="loading" [(ngModel)]="contact.zipCode" matInput placeholder="Zip Code">
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>City</mat-label>
+        <input [disabled]="loading" [(ngModel)]="contact.city" matInput placeholder="City" required>
+        @if(!contact.city){<mat-error>City is required</mat-error>}
+      </mat-form-field>
+    </div>
+  </div>
+  <mat-dialog-actions>
+    <button [disabled]="loading" mat-button (click)="closeDialog()">Cancel</button>
+    <button [disabled]="loading || !isFormValid()" mat-button (click)="saveContact()" cdkFocusInitial>Save</button>
+  </mat-dialog-actions>
+</div>
+
+<!-- <h2>DialogRegister</h2>
+
+<form [formGroup]="DialogRegisterForm" (ngSubmit)="onDialogRegister()">
+  <label for="firstName">First Name:</label>
+  <input id="firstName" type="text" formControlName="firstName" required />
+  @if(!DialogRegisterForm.get('firstName')?.invalid && DialogRegisterForm.get('firstName')?.touched){<div>First name is required.</div>}
+
+  <label for="lastName">Last Name:</label>
+  <input id="lastName" type="text" formControlName="lastName" required />
+  @if(!DialogRegisterForm.get('lastName')?.invalid && DialogRegisterForm.get('lastName')?.touched){<div>Last name is required.</div>}
+  
+
+  <label for="email">Email:</label>
+  <input id="email" type="email" formControlName="email" required />
+  @if(DialogRegisterForm.get('email')?.invalid && DialogRegisterForm.get('email')?.touched){<div>Please enter a valid email address.</div>}
+
+
+  <label for="birthDate">Birth Date:</label>
+  <input id="birthDate" type="date" formControlName="birthDate" required />
+    @if(DialogRegisterForm.get('birthDate')?.invalid && DialogRegisterForm.get('birthDate')?.touched){<div>Birth date is required.</div>}
+
+
+  <label for="street">Street:</label>
+  <input id="street" type="text" formControlName="street" required />
+    @if(DialogRegisterForm.get('street')?.invalid && DialogRegisterForm.get('street')?.touched){<div>Street is required.</div>}
+  
+
+  <label for="zipCode">Zip Code:</label>
+  <input id="zipCode" type="text" formControlName="zipCode" required />
+    @if(DialogRegisterForm.get('zipCode')?.invalid && DialogRegisterForm.get('zipCode')?.touched){<div>Please enter a valid zip code (5 digits).</div>}
+  
+
+  <label for="city">City:</label>
+  <input id="city" type="text" formControlName="city" required />
+    @if(DialogRegisterForm.get('city')?.invalid && DialogRegisterForm.get('city')?.touched){<div>City is required.</div>}
+  
+
+  <button type="submit" [disabled]="DialogRegisterForm.invalid">DialogRegister</button>
+
+   @if(errorMessage){<p class="error">{{ errorMessage }}</p>}
+
+</form> -->
