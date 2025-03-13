@@ -14,12 +14,14 @@ import { Observable, forkJoin } from 'rxjs';
 import { NgClass } from '@angular/common';
 import { WarningDialogComponent } from '../warning-dialog/warning-dialog.component';
 import { UserService } from '../user.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
   imports: [MatCardModule, MatIconModule, 
-    MatDialogModule, MatButtonModule, MatTooltipModule, NgClass, CommonModule],
+    MatDialogModule, MatButtonModule, MatTooltipModule, 
+    NgClass, CommonModule, HeaderComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })

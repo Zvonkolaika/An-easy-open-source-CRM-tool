@@ -9,12 +9,13 @@ import { ChartConfiguration, ChartType, } from 'chart.js';
 import { CommonModule } from '@angular/common';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Chart } from 'chart.js';
+import { HeaderComponent } from '../header/header.component';
 
 Chart.register(ChartDataLabels);
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [MatCardModule, BaseChartDirective, CommonModule],
+  imports: [MatCardModule, BaseChartDirective, CommonModule, HeaderComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'

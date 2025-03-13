@@ -12,12 +12,13 @@ import { collectionData } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { UserService } from '../user.service';
 import { NgClass } from '@angular/common';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-user',
   standalone: true,
   imports: [MatIconModule, MatButtonModule, MatTooltipModule,
-            MatDialogModule, MatCardModule, RouterLink, NgClass],
+            MatDialogModule, MatCardModule, RouterLink, NgClass, HeaderComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.scss'
 })

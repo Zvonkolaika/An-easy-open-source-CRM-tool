@@ -18,13 +18,14 @@ import { UserService } from '../user.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { MatMenuModule } from '@angular/material/menu';
+import { HeaderComponent } from '../header/header.component'; 
 
 @Component({
   selector: 'app-deal',
   standalone: true,
   imports: [MatIconModule, MatButtonModule, MatTooltipModule,
     MatFormFieldModule, MatInputModule, MatMenuModule, MatDialogModule,
-    MatCardModule, RouterLink, NgClass, DatePipe, CommonModule],
+    MatCardModule, RouterLink, NgClass, DatePipe, CommonModule, HeaderComponent],
   templateUrl: './deal.component.html',
   styleUrl: './deal.component.scss'
 })
