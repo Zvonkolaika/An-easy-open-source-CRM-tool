@@ -7,6 +7,7 @@ export class Contact {
     street: string;
     zipCode: number;
     city: string;
+    password: string = ''; // Add this property
 
     constructor(obj?: any) {
         this.id = obj ? obj.id : null;
@@ -17,6 +18,7 @@ export class Contact {
         this.street = obj ? obj.street : '';
         this.zipCode = obj ? obj.zipCode : '';
         this.city = obj ? obj.city : '';
+        this.password = obj ? obj.password : ''; // Add this line
     }
 
     toJSON() {
@@ -29,6 +31,7 @@ export class Contact {
             street: this.street,
             zipCode: this.zipCode,
             city: this.city,
+            password: this.password // Add this line
         };
     }
 }
