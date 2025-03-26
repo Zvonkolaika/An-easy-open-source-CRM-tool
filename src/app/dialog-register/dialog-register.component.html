@@ -23,6 +23,44 @@
     </div>
     <div>
       <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Password</mat-label>
+        <input
+          [disabled]="loading"
+          [(ngModel)]="contact.password"
+          matInput
+          placeholder="Password"
+          type="password"
+          required
+          [pattern]="passwordPattern"
+          minlength="8"
+          [matTooltip]="!isPasswordValid() ? 'Password must be at least 8 characters long and include letters, numbers, and symbols.' : ''"
+          matTooltipPosition="above"
+          matTooltipHideDelay="10000"
+        >
+        @if(!contact.password){<mat-error>Password is required</mat-error>}
+       
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          [disabled]="loading"
+          [(ngModel)]="confirmPassword"
+          matInput
+          placeholder="Confirm Password"
+          type="password"
+          required
+          [matTooltip]="!doPasswordsMatch() ? 'Passwords do not match' : ''"
+          matTooltipPosition="above"
+          matTooltipHideDelay="10000"
+        >
+        @if(!confirmPassword){<mat-error>Confirm Password is required</mat-error>}
+      </mat-form-field>
+    </div>
+   
+    <div>
+      <mat-form-field appearance="outline" class="full-width">
         <mat-label>Street & House N</mat-label>
         <input [disabled]="loading" [(ngModel)]="contact.street" matInput placeholder="Street">
       </mat-form-field>
@@ -45,45 +83,4 @@
   </mat-dialog-actions>
 </div>
 
-<!-- <h2>DialogRegister</h2>
 
-<form [formGroup]="DialogRegisterForm" (ngSubmit)="onDialogRegister()">
-  <label for="firstName">First Name:</label>
-  <input id="firstName" type="text" formControlName="firstName" required />
-  @if(!DialogRegisterForm.get('firstName')?.invalid && DialogRegisterForm.get('firstName')?.touched){<div>First name is required.</div>}
-
-  <label for="lastName">Last Name:</label>
-  <input id="lastName" type="text" formControlName="lastName" required />
-  @if(!DialogRegisterForm.get('lastName')?.invalid && DialogRegisterForm.get('lastName')?.touched){<div>Last name is required.</div>}
-  
-
-  <label for="email">Email:</label>
-  <input id="email" type="email" formControlName="email" required />
-  @if(DialogRegisterForm.get('email')?.invalid && DialogRegisterForm.get('email')?.touched){<div>Please enter a valid email address.</div>}
-
-
-  <label for="birthDate">Birth Date:</label>
-  <input id="birthDate" type="date" formControlName="birthDate" required />
-    @if(DialogRegisterForm.get('birthDate')?.invalid && DialogRegisterForm.get('birthDate')?.touched){<div>Birth date is required.</div>}
-
-
-  <label for="street">Street:</label>
-  <input id="street" type="text" formControlName="street" required />
-    @if(DialogRegisterForm.get('street')?.invalid && DialogRegisterForm.get('street')?.touched){<div>Street is required.</div>}
-  
-
-  <label for="zipCode">Zip Code:</label>
-  <input id="zipCode" type="text" formControlName="zipCode" required />
-    @if(DialogRegisterForm.get('zipCode')?.invalid && DialogRegisterForm.get('zipCode')?.touched){<div>Please enter a valid zip code (5 digits).</div>}
-  
-
-  <label for="city">City:</label>
-  <input id="city" type="text" formControlName="city" required />
-    @if(DialogRegisterForm.get('city')?.invalid && DialogRegisterForm.get('city')?.touched){<div>City is required.</div>}
-  
-
-  <button type="submit" [disabled]="DialogRegisterForm.invalid">DialogRegister</button>
-
-   @if(errorMessage){<p class="error">{{ errorMessage }}</p>}
-
-</form> -->

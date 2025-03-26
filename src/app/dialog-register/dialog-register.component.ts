@@ -1,10 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../contact.service';
 import { Contact } from '../../models/contact.class';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Firestore } from '@angular/fire/firestore';
-import { User } from '../../models/user.class';
 import {
   MatDialogActions,
   MatDialogContent,
@@ -15,64 +12,68 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { FormsModule } from '@angular/forms';
-import { UserService } from '../user.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
-import { NgClass } from '@angular/common';
+import {TooltipPosition, MatTooltipModule} from '@angular/material/tooltip';
+import {FormControl} from '@angular/forms';
+import { WarningDialogComponent } from '../warning-dialog/warning-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-DialogRegister',
+  selector: 'app-DialogRegister', 
   templateUrl: './dialog-register.component.html',
   imports: [MatDialogContent, MatDialogActions, MatDialogTitle,
     MatButtonModule, MatInputModule, MatFormFieldModule,
     MatDatepickerModule, MatProgressBarModule, FormsModule, 
     MatMenuModule, MatSelectModule,
-    ReactiveFormsModule
-  ],
+    ReactiveFormsModule, MatTooltipModule],
   standalone: true,
   styleUrls: ['./dialog-register.component.scss']
 })
 export class DialogRegisterComponent {
 
+  positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
+  position = new FormControl(this.positionOptions[0]);
   
   loading = false;
-  // DialogRegisterForm: FormGroup;
+  confirmPassword: string = '';
   errorMessage: string = '';
   contact = new Contact();
 
   constructor(public dialogRef: MatDialogRef<DialogRegisterComponent>, private ContactService: ContactService) {
-    // this.DialogRegisterForm = this.fb.group({
-    //   firstName: ['', Validators.required],
-    //   lastName: ['', Validators.required],
-    //   email: ['', [Validators.required, Validators.email]],
-    //   birthDate: ['', Validators.required],
-    //   street: ['', Validators.required],
-    //   zipCode: ['', [Validators.required, Validators.pattern('^[0-9]{5}$')]],
-    //   city: ['', Validators.required],
-    // });
+   
   }
+   readonly dialog = inject(MatDialog);
 
-  // async onDialogRegister() {
-  //   if (this.DialogRegisterForm.invalid) return;
+ // Regex pattern for password validation: At least 8 characters, including letters, numbers, and symbols
+ passwordPattern = '^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+\\-=\\[\\]{};:\'",.<>?/|`~]).{8,}$';
 
-  //   const newContact = new Contact(this.DialogRegisterForm.value);
-  //   try {
-  //     await this.ContactService.addContact(newContact);
-  //     console.log('Contact DialogRegistered successfully:', newContact);
-  //   } catch (error) {
-  //     this.errorMessage = 'Registration failed: ' + (error as any).message;
-  //   }
-  // }
+ isPasswordValid(): boolean {
+   const regex = new RegExp(this.passwordPattern);
+   return regex.test(this.contact.password);
+ }
+
+ doPasswordsMatch(): boolean {
+  const passwordsMatch = this.contact.password === this.confirmPassword;
+  // console.log('Passwords match:', passwordsMatch);
+  return passwordsMatch;
+}
 
   closeDialog() {
     this.dialogRef.close(null);
   }
 
   isFormValid(): boolean {
-    return !!this.contact.firstName && !!this.contact.lastName && !!this.contact.email && !!this.contact.city;
+    return !!(
+      this.contact.firstName &&
+      this.contact.lastName &&
+      this.contact.email &&
+      this.contact.city &&
+      this.isPasswordValid() &&
+      this.doPasswordsMatch()
+    );
   }
 
   async saveContact() {
@@ -80,6 +81,9 @@ export class DialogRegisterComponent {
     try {
       const updatedContact = await this.ContactService.saveContact(this.contact);
       this.dialogRef.close(updatedContact);
+      this.dialog.open(WarningDialogComponent, {
+        data: { message: 'Your contact has been saved. Please log in to proceed.' }
+      });
     } catch (e) {
       console.error('Error saving document: ', e);
     } finally {

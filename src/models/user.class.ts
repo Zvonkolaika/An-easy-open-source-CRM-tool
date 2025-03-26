@@ -9,6 +9,8 @@ export class User {
     city: string;
     type: string;
     priority: string;
+    // Add the password property
+    password: string;
 
     constructor(obj?: any) {
         this.id = obj ? obj.id : null;
@@ -21,6 +23,7 @@ export class User {
         this.city = obj ? obj.city : '';
         this.type = obj ? obj.type : '';
         this.priority = obj ? obj.priority : '';
+        this.password = obj ? obj.password : '';
     }
 
     toJSON() {
@@ -34,7 +37,8 @@ export class User {
             zipCode: this.zipCode,
             city: this.city,
             type: this.type,
-            priority: this.priority
+            priority: this.priority,
+            password: this.password
         };
 }
 }
