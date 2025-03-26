@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, updateDoc, doc, getDocs, deleteDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, updateDoc, doc, 
+  query, where, getDocs, deleteDoc, getDoc } from '@angular/fire/firestore';
 import { Contact } from '../models/contact.class';
 import { User } from '../models/user.class';
 
@@ -50,6 +51,23 @@ export class ContactService {
       throw new Error('No such document!');
     }
   }
+
+
+// Function to get user by email and return the user id
+// async getUserIdByEmail(email: string): Promise<string | null> {
+//   const usersRef = collection(this.firestore, "users");
+//   const q = query(usersRef, where("mail", "==", email));
+//   const querySnapshot = await getDocs(q);
+  
+//   if (!querySnapshot.empty) {
+//     // Assuming you are getting a single user, you can grab the first document
+//     const userDoc = querySnapshot.docs[0];
+//     return userDoc.id;  // This will return the user ID
+//   } else {
+//     throw new Error('User not found');
+//   }
+// }
+
 
   // Add a new contact
   async addContact(contact: Contact): Promise<void> {
