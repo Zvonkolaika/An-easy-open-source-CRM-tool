@@ -1,5 +1,5 @@
 <mat-drawer-container class="mat-drawer-container" autosize>
-  <mat-drawer #drawer class="sidenav" [opened]="true" mode="side">
+  <mat-drawer #drawer class="sidenav" [mode]="isMobileView ? 'over' : 'side'" [opened]="!isMobileView" (closedStart)="drawer.close()">
     <div class="logo-container">
       <img class="logo" src="../assets/img/logo4.png" alt="logo" />
     </div>
@@ -7,14 +7,17 @@
       <a href="dashboard"><mat-icon>dashboard</mat-icon>Dashboard</a>
       <a href="user"><mat-icon>person</mat-icon>Users</a>
       <a href="deal"><mat-icon>work</mat-icon>Deals</a>
+      <a href="contact"><mat-icon>contacts</mat-icon>Contacts</a>
     </ul>
   </mat-drawer>
   <div class="example-sidenav-content">
     <mat-toolbar color="primary bgc-blue">
-      <mat-toolbar-row>
+      <mat-toolbar-row class="mat-toolbar-cont">
         <mat-icon class="menu-icon" (click)="drawer.toggle()">menu</mat-icon>
         <span>Simple CRM</span>
+        <a href="login" class="logout-icon"><mat-icon>logout</mat-icon></a>
       </mat-toolbar-row>
+      
     </mat-toolbar>
     <div class="router-container">
       <router-outlet />
