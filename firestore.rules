@@ -1,19 +1,41 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    // This rule allows anyone with your Firestore database reference to view, edit,
-    // and delete all data in your Firestore database. It is useful for getting
-    // started, but it is configured to expire after 30 days because it
-    // leaves your app open to attackers. At that time, all client
-    // requests to your Firestore database will be denied.
-    //
-    // Make sure to write security rules for your app before that time, or else
-    // all client requests to your Firestore database will be denied until you Update
-    // your rules
-    match /{document=**} {
-      allow read, write: if request.time < timestamp.date(2025, 2, 9);
+   match /public/{document=**} {
+  allow read: if true;  // Allow everyone to read
+  allow write: if request.auth == null;  // Allow only guests to write
+}
+    
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+    }
+
+    match /deals/{dealId} {
+      allow read: if true;  // Allow anyone to read deals
+
+      // Allow authenticated users if they haven't written more than 2 deals
+      allow write: if request.auth != null && request.auth.token.writingsCount < 2;
+
+      // Allow guests if they have written fewer than 2 deals
+      allow write: if request.auth == null && guestDealCount(request.resource);
+    }
+
+    // Function to check guest deals count
+    function guestDealCount(resource) {
+      let guestId = resource.data.guestId;
+      return exists(/databases/$(database)/documents/guestDeals/$(guestId)) &&
+             get(/databases/$(database)/documents/guestDeals/$(guestId)).data.count < 2;
+    }
+
+    match /contacts/{contactId} {
+      allow read: if true;
+      allow read, write: if request.auth != null;
+    }
+
+    match /writings/{writingId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.token.writingsCount < 2;
     }
   }
 }
