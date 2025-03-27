@@ -72,11 +72,16 @@ export class LoginComponent {
         }
       }
     }
-    console.log('Contact not found in the system. Please register.');
+    // console.log('Contact not found in the system. Please register.');
     this.dialog.open(WarningDialogComponent, {
       data: { message: 'Contact or password is not correct. Please register.' }
     }).afterClosed().subscribe(() => {
       this.loginForm.reset();
+      this.loginForm.markAsPristine(); // Mark the form as pristine
+      this.loginForm.markAsUntouched(); // Mark the form as untouched
+      Object.keys(this.loginForm.controls).forEach((key) => {
+        this.loginForm.get(key)?.setErrors(null); // Clear validation errors
+      });
     });
   }
 
