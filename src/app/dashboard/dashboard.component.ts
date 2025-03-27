@@ -72,9 +72,8 @@ export class DashboardComponent {
   };
 
   public pieChartType: ChartType = 'pie';
-  public totalActiveDeals: number = 0; 
-  public totalRevenue: number = 0; 
-
+  public totalActiveDeals: number = 0;
+  public totalRevenue: number = 0;
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
@@ -92,15 +91,15 @@ export class DashboardComponent {
         callbacks: {
           label: (context) => {
             const value = context.raw as number;
-            return `$${value.toFixed(0)}`; 
+            return `$${value.toFixed(0)}`;
           }
         }
       },
       datalabels: {
         anchor: 'end',
         align: 'end',
-        formatter: (value) => `$${value.toFixed(0)}`, 
-        color: '#000', 
+        formatter: (value) => `$${value.toFixed(0)}`,
+        color: '#000',
       }
     },
     scales: {
@@ -152,7 +151,7 @@ export class DashboardComponent {
 
     this.pieChartData = {
       labels,
-      
+
       datasets: [{
         data,
         backgroundColor

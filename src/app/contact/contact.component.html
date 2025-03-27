@@ -1,77 +1,32 @@
 <app-header [title]="'Contacts'"></app-header>
 <mat-card appearance="outlined">
     <mat-card-content>
-        
+
         <table class="contact-table">
             <tr>
-                <!-- <th>Convert into a user</th> -->
                 <th></th>
                 <th>Name</th>
                 <th>Email</th>
                 <th>Zip Code</th>
                 <th>City</th>
                 <th>Street & House N</th>
-                
             </tr>
             @for(contact of contacts; track contacts; let i = $index){
             <tr>
-                
                 <td class="empty">
-                    <mat-icon 
-            (click)="handleIconClick(contact)" 
-            matTooltip="Convert into a user" 
-            matTooltipPosition="above"
-            [ngClass]="{'inactive-icon': contact.id ? duplicateStatus[contact.id] : false}">
-            {{ contact.id && duplicateStatus[contact.id] ? 'person_add_disabled' : 'person_add' }}
-          </mat-icon>
-                    
-                  <!-- @if(errorMessage){
-                    <div class="error-message">{{ errorMessage }}</div>
-                } -->
+                    <mat-icon (click)="handleIconClick(contact)" matTooltip="Convert into a user"
+                        matTooltipPosition="above"
+                        [ngClass]="{'inactive-icon': contact.id ? duplicateStatus[contact.id] : false}">
+                        {{ contact.id && duplicateStatus[contact.id] ? 'person_add_disabled' : 'person_add' }}
+                    </mat-icon>
                 </td>
-                <td>
-
-                        <!-- <button (click)="openDialog()" class="add-user-btn" mat-fab color="primary" 
-                        > -->
-                        <!-- <mat-icon (click)="openDialog(contact)" 
-                        matTooltip="Convert into a user" matTooltipPosition="above">person_add</mat-icon> -->
-                    <!-- </button> -->
-                   
-                    <!-- <a [routerLink]="[ '/contact/' + contact.id ]"> -->
-                        {{contact.firstName}} {{contact.lastName}}</td>
-                    <!-- </a> -->
-                    
+                <td>{{contact.firstName}} {{contact.lastName}}</td>
                 <td>{{contact.email}}</td>
                 <td>{{contact.zipCode}}</td>
                 <td>{{contact.city}}</td>
                 <td>{{contact.street}}</td>
-                
             </tr>
             }
         </table>
-       
     </mat-card-content>
 </mat-card>
-
-
-<!-- 
-
-<div *ngFor="let contact of contacts">
-    <p>{{ contact.firstName }} {{ contact.lastName }} - {{ contact.email }} ({{ contact.city }}, {{ contact.zipCode }})</p>
-  
-    <label>Type:</label>
-    <select #typeSelect>
-        @for( let type of types; track type; let i = $index ) {<option>{{ type }}</option>}
-    </select>
-  
-    <label>Priority:</label>
-    <select #prioritySelect>
-        @for( let priority of priorities; track priority; let i = $index ) {<option>{{ priority }}</option>}
-    </select>
-  
-    <label>Password:</label>
-    <input type="password" #passwordInput />
-  
-    <button (click)="upgradeToUser(contact, typeSelect.value, prioritySelect.value, passwordInput.value)">Upgrade to User</button>
-  </div>
-   -->

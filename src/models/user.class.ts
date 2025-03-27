@@ -9,7 +9,6 @@ export class User {
     city: string;
     type: string;
     priority: string;
-    // Add the password property
     password: string;
 
     constructor(obj?: any) {

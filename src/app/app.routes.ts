@@ -10,7 +10,6 @@ import { ContactComponent } from './contact/contact.component';
 export const routes: Routes = [
     { path: '', redirectTo: '/login', pathMatch: 'full' }, // Default route}
     { path: 'login', component: LoginComponent},
-    // { path: '', component: DashboardComponent},
     { path: 'dashboard', component: DashboardComponent},
     { path: 'user', component: UserComponent},
     { path: 'user/:id', component: UserDetailComponent},

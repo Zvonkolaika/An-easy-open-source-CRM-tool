@@ -34,7 +34,7 @@ interface Priority {
   standalone: true,
   imports: [MatDialogContent, MatDialogActions, MatDialogTitle,
     MatButtonModule, MatInputModule, MatFormFieldModule,
-    MatDatepickerModule, MatProgressBarModule, FormsModule, 
+    MatDatepickerModule, MatProgressBarModule, FormsModule,
     MatMenuModule, MatSelectModule, NgClass],
   templateUrl: './dialog-add-user.component.html',
   providers: [provideNativeDateAdapter()],
@@ -46,23 +46,23 @@ export class DialogAddUserComponent {
     @Inject(MAT_DIALOG_DATA) public data: { contact: Contact }
   ) {
     if (data && data.contact) {
-    this.user.firstName = data.contact.firstName;
-    this.user.lastName = data.contact.lastName;
-    this.user.email = data.contact.email;
-    this.user.city = data.contact.city;
-    this.user.street = data.contact.street;
-    this.user.zipCode = data.contact.zipCode;
+      this.user.firstName = data.contact.firstName;
+      this.user.lastName = data.contact.lastName;
+      this.user.email = data.contact.email;
+      this.user.city = data.contact.city;
+      this.user.street = data.contact.street;
+      this.user.zipCode = data.contact.zipCode;
+    }
   }
- }
 
- errorMessage: string = '';
+  errorMessage: string = '';
 
   private firestore: Firestore = inject(Firestore);
 
   loading = false;
   user = new User();
   birthDate: Date | null = null;
-  selectedValue: string = ''; 
+  selectedValue: string = '';
 
   types: Type[] = [
     { value: 'Customer', viewValue: 'Customer' },
@@ -92,7 +92,6 @@ export class DialogAddUserComponent {
         this.user.birthDate = this.birthDate.getTime();
       }
 
-      // Check if a user with the same name already exists
       const usersCollection = collection(this.firestore, 'users');
       const q = query(usersCollection, where('firstName', '==', this.user.firstName), where('lastName', '==', this.user.lastName));
       const querySnapshot = await getDocs(q);
@@ -106,8 +105,6 @@ export class DialogAddUserComponent {
         return;
       }
 
-
-      
       const updatedUser = await this.userService.saveUser(this.user);
       console.log('User saved:', updatedUser);
       this.dialogRef.close(updatedUser);
